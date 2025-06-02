@@ -15,32 +15,35 @@ public class DocumentService {
     @Inject
     PdfGenerator pdfGenerator;
     
-    // @Inject
-    // EmailGenerator emailGenerator; // Future implementation
+     @Inject
+     EmailGenerator emailGenerator;
     
-    // @Inject
-    // SmsGenerator smsGenerator; // Future implementation
+     @Inject
+     SmsGenerator smsGenerator;
 
     @Inject
     Engine quteEngine;
 
     public byte[] generateDocument(DocumentRequest request) throws Exception {
-        Template template = templateService.findByName(request.templateName);
+        Template template = templateService.findByName(request.getTemplateName());
         if (template == null) {
-            throw new RuntimeException("Template not found: " + request.templateName);
+            throw new RuntimeException("Template não encontrado: " + request.getTemplateName());
         }
 
-        String processedContent = quteEngine.parse(template.content).data(request.metadata).render();
+        String processedContent = quteEngine
+                .parse(template.getContent())
+                .data(request.getMetadata())
+                .render();
 
-        switch (template.type) {
+        switch (template.getType()) {
             case PDF:
-                return pdfGenerator.generate(processedContent);
-            // case EMAIL:
-                // return emailGenerator.generate(processedContent, request.metadata); // Future
-            // case SMS:
-                // return smsGenerator.generate(processedContent, request.metadata); // Future
+                return pdfGenerator.generatePdf(template.getContent(), request.getMetadata());
+             case EMAIL:
+                 return emailGenerator.generate(processedContent, request.metadata); // Future
+             case SMS:
+                 return smsGenerator.generate(processedContent, request.metadata); // Future
             default:
-                throw new UnsupportedOperationException("Document type not supported: " + template.type);
+                throw new UnsupportedOperationException("Documento não suportado " + template.getType());
         }
     }
 }

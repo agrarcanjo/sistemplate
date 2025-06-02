@@ -7,10 +7,11 @@ import java.util.Map;
 public class EmailGenerator {
 
     public byte[] generate(String processedContent, Map<String, Object> metadata) {
-        // Future implementation for email generation
-        System.out.println("Generating Email (Future):");
+
+        // TODO
+        System.out.println("Generating Email:");
         System.out.println("Content: " + processedContent);
         System.out.println("Metadata: " + metadata);
-        return ("Email Body: " + processedContent).getBytes(); // Placeholder
+        return ("Email Body: " + processedContent).getBytes();
     }
 }

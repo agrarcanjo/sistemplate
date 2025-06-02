@@ -9,16 +9,16 @@ import org.eclipse.microprofile.openapi.annotations.tags.Tag;
 
 @OpenAPIDefinition(
     tags = {
-            @Tag(name="Templates", description="Operations related to template management"),
-            @Tag(name="Documents", description="Operations related to document generation")
+            @Tag(name="Templates", description="Operações de gerenciamento de templates"),
+            @Tag(name="Documents", description="Operações de geração de documentos")
     },
     info = @Info(
-        title="Dynamic Document Generation API",
+        title="Sistema de Templates API",
         version = "1.0.0",
         contact = @Contact(
             name = "API Support",
-            url = "http://example.com/contact",
-            email = "support@example.com"),
+            url = "http://accenture.com/contact",
+            email = "support@accenture.com"),
         license = @License(
             name = "Apache 2.0",
             url = "https://www.apache.org/licenses/LICENSE-2.0.html"))

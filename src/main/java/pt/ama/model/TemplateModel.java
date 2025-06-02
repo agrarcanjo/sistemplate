@@ -1,16 +1,14 @@
 package pt.ama.model;
 
 import io.quarkus.mongodb.panache.common.MongoEntity;
-import lombok.Data;
 import org.bson.codecs.pojo.annotations.BsonId;
 import org.bson.types.ObjectId;
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import lombok.Data;
 
 @Data
 @MongoEntity(collection="templates")
-public class Template {
+public class TemplateModel {
     @BsonId
-    @JsonIgnore
     private ObjectId id;
     private String name;
     private DocumentType type;
