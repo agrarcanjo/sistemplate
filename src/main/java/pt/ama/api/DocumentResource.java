@@ -1,5 +1,6 @@
 package pt.ama.api;
 
+import jakarta.validation.Valid;
 import pt.ama.model.DocumentRequest;
 import pt.ama.service.DocumentService;
 import jakarta.inject.Inject;
@@ -20,7 +21,7 @@ public class DocumentResource {
     @Path("/generate")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_OCTET_STREAM) 
-    public Response generateDocument(DocumentRequest request) {
+    public Response generateDocument(@Valid DocumentRequest request) {
         try {
             byte[] document = documentService.generateDocument(request);
             

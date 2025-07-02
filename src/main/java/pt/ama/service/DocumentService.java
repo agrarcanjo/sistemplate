@@ -14,12 +14,6 @@ public class DocumentService {
 
     @Inject
     PdfGenerator pdfGenerator;
-    
-     @Inject
-     EmailGenerator emailGenerator;
-    
-     @Inject
-     SmsGenerator smsGenerator;
 
     @Inject
     Engine quteEngine;
@@ -30,18 +24,19 @@ public class DocumentService {
             throw new RuntimeException("Template não encontrado: " + request.getTemplateName());
         }
 
-        String processedContent = quteEngine
-                .parse(template.getContent())
-                .data(request.getMetadata())
-                .render();
-
         switch (template.getType()) {
             case PDF:
-                return pdfGenerator.generatePdf(template.getContent(), request.getMetadata());
-             case EMAIL:
-                 return emailGenerator.generate(processedContent, request.metadata); // Future
-             case SMS:
-                 return smsGenerator.generate(processedContent, request.metadata); // Future
+                return templateService.generatePdf(
+                    request.getTemplateName(), 
+                    request.getData(), 
+                    request.getOptions()
+                );
+            case EMAIL:
+                // TODO: Implementar geração de email
+                throw new UnsupportedOperationException("Email generation not implemented yet");
+            case SMS:
+                // TODO: Implementar geração de SMS
+                throw new UnsupportedOperationException("SMS generation not implemented yet");
             default:
                 throw new UnsupportedOperationException("Documento não suportado " + template.getType());
         }

@@ -1,0 +1,976 @@
+<!DOCTYPE html>
+<html lang="pt">
+
+<head>
+  <meta charset="utf-8" />
+  <title>
+    Declaração de Candidatura – Coaching 4.0
+  </title>
+  <link href="template.css" rel="stylesheet" />
+  <style>
+
+  .tbl {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+    font-size: 11pt;
+  }
+
+  .tbl th,
+  .tbl td {
+    border: 1px solid #999;
+    padding: 10px 12px;
+    text-align: left;
+    vertical-align: top;
+  }
+
+  /* Célula de rótulo (label) */
+  .lbl {
+    width: 40%;
+    background-color: #f2f2f2;
+    font-weight: bold;
+    color: #000;
+    white-space: normal;
+    word-wrap: break-word;
+    word-break: break-word;
+  }
+
+  /* Célula de valor */
+  .val {
+    width: 60%;
+    color: #333;
+  }
+
+  /* Parágrafos explicativos/contexto */
+  .ctx {
+    font-family: Arial, sans-serif;
+    font-style: normal;
+    font-size: 11pt;
+    color: #000;
+    line-height: 1.6;
+    margin-top: 8px;
+    margin-bottom: 24px;
+    text-align: justify;
+  }
+
+  /* Logotipo */
+  .logo-esquerda {
+    width: 100px;
+    height: auto;
+    margin-bottom: 20px;
+  }
+
+  /* Página e rodapé */
+  @page {
+    size: A4;
+    margin: 2cm;
+
+    @bottom-left {
+      content: url("../logo_govpt.png") "  ©2025 AMA - Agência para a Modernização Administrativa, IP";
+      font-size: 9pt;
+      color: #555;
+      vertical-align: middle;
+    }
+
+    @bottom-right {
+      content: "Pág. " counter(page) " de " counter(pages);
+      font-size: 9pt;
+      font-weight: bold;
+      color: #003366;
+    }
+  }
+
+  /* Checkbox institucional */
+  .chkbox {
+    display: inline-block;
+    border: 1px solid #000;
+    width: 14px;
+    height: 14px;
+    text-align: center;
+    line-height: 14px;
+    font-weight: bold;
+    margin-right: 8px;
+  }
+
+  /* Bloco de assinatura */
+  .assinatura {
+    border: 1px solid #aaa;
+    width: 250px;
+    height: 100px;
+    text-align: center;
+    line-height: 100px;
+    color: #999;
+    font-style: italic;
+    margin-top: 10px;
+    margin-bottom: 30px;
+  }
+
+  /* Caixa com borda fina para parágrafos institucionais */
+  .caixa {
+    border: 1px solid #999;
+    padding: 12px;
+    margin: 10px 0 20px 0;
+    font-size: 11pt;
+    color: #000;
+    line-height: 1.5;
+  }
+  .caixa a {
+    color: #000;
+    text-decoration: underline;
+    font-weight: bold;
+  }
+
+  #termo-aceitacao ul.ctx {
+    margin-left: 120px;
+    padding-right: 30px;
+    list-style-position: outside;
+  }
+
+  #termo-aceitacao ul.ctx li {
+    margin-bottom: 10px;
+    padding-left: 10px;
+    text-align: justify;
+    position: relative;
+  }
+
+  /* Listas institucionais */
+  ul.ctx {
+    font-size: 11pt;
+    color: #333;
+    margin-left: 20px;
+    margin-bottom: 20px;
+  }
+  ul.ctx li {
+    margin-bottom: 6px;
+  }
+
+  #termo-aceitacao {
+    max-width: 800px;
+    margin: 80px auto;
+    padding: 30px;
+    background-color: #f9f9f9;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+  }
+
+  #termo-aceitacao .ctx {
+    text-align: justify;
+    margin-bottom: 25px;
+    line-height: 1.6;
+  }
+
+  #termo-aceitacao .chkbox {
+    display: inline-block;
+    border: 2px solid #003366;
+    width: 20px;
+    height: 20px;
+    text-align: center;
+    line-height: 18px;
+    margin-right: 10px;
+    color: #003366;
+    font-weight: bold;
+    vertical-align: middle;
+  }
+
+  .assinatura-bloco {
+    width: 100%;
+    text-align: center;
+    margin-top: 40px;
+  }
+
+  .assinatura {
+    display: inline-block;
+    border: 2px solid #003366;
+    width: 300px;
+    height: 120px;
+    text-align: center;
+    line-height: 120px;
+    color: #666;
+    font-style: italic;
+    margin-top: 15px;
+    margin-bottom: 30px;
+    background-color: white;
+  }
+
+  </style>
+</head>
+
+<body>
+  {% macro mostrar(valor) %}
+  {% if valor %}
+  {{ valor }}
+  {% else %}
+  <span class="nao-preenchido">
+    (não preenchido)
+  </span>
+  {% endif %}
+  {% endmacro %}
+  <div class="header">
+    <img alt="Logotipo GovPT" aria-hidden="true" class="logo-esquerda" src="logo_govpt.png" />
+    <div class="texto-header">
+      <h1>
+        Declaração de Candidatura – Coaching 4.0
+      </h1>
+      <p>
+        Investimento PRR | Aviso 22/C16-i02/2025
+      </p>
+    </div>
+  </div>
+  <h2>
+    <h2>1. Declaração de Entrega Eletrónica</h2>
+    <table class="tbl">
+      <tr>
+        <th class="lbl">N.º do formulário:</th>
+        <td class="val">{{ formId }}</td>
+      </tr>
+      <tr>
+        <th class="lbl">N.º de páginas:</th>
+        <td class="val">{{ total_paginas }}</td>
+      </tr>
+    </table>
+    {% if submissionId %}
+    <p class="ctx-declaracao">
+      <strong>Submission declaration – {{ submissionId }}</strong>
+    </p>
+    {% endif %}
+    <p class="ctx-declaracao">
+      Candidatura à atribuição de vales de apoio à transição digital (coaching 4.0)
+    </p>
+    <h2>
+      2. Informações do Aviso
+    </h2>
+    <table class="tbl">
+      <tr>
+        <th class="lbl">
+          Investimento plano de recuperação e resiliência
+        </th>
+        <td class="val">
+          TD-C16-i02
+        </td>
+      </tr>
+      <tr>
+        <th class="lbl">
+          Apoio a modelos de negócio para a transição digital (“Coaching 4.0”)
+        </th>
+        <td class="val">
+        </td>
+      </tr>
+      <tr>
+        <th class="lbl">
+          Aviso
+        </th>
+        <td class="val">
+          22/C16-i02/2025
+        </td>
+      </tr>
+      <tr>
+        <th class="lbl">
+          Beneficiário intermediário
+        </th>
+        <td class="val">
+          IAPMEI
+        </td>
+      </tr>
+    </table>
+    <h2>
+      3. Identificação do Requerente
+    </h2>
+    <table class="tbl">
+      <tr>
+        <td class="lbl">
+          Nome
+        </td>
+        <td>
+          {{ formData.req_nome }}
+        </td>
+      </tr>
+      <tr>
+        <td class="lbl">
+          Número de identificação fiscal (NIF)
+        </td>
+        <td>
+          {{ formData.req_nif }}
+        </td>
+      </tr>
+      <tr>
+        <td class="lbl">
+          Na qualidade de
+        </td>
+        <td>
+          {{ formData.req_qualidade }}
+        </td>
+      </tr>
+      <tr>
+        <td class="lbl">
+          E-mail
+        </td>
+        <td>
+          {{ formData.req_email }}
+        </td>
+      </tr>
+      <tr>
+        <td class="lbl">
+          Contacto telefónico
+        </td>
+        <td>
+          {{ formData.req_contactotelefonico }}
+        </td>
+      </tr>
+    </table>
+    <h2>
+      4. Identificação do Beneficiário (Candidato)
+    </h2>
+    <table class="tbl">
+      <tr>
+        <td class="lbl">
+          Tipologia do plano de recuperação e resiliência (PRR)
+        </td>
+        <td>
+          {{ formData.titular_tipo }}
+        </td>
+      </tr>
+      <tr>
+        <td class="lbl">
+          NIF/NIPC
+        </td>
+        <td>
+          {{ formData.titular_nipc }}
+        </td>
+      </tr>
+      <tr>
+        <td class="lbl">
+          Designação da entidade
+        </td>
+        <td>
+          {{ formData.titular_firma }}
+        </td>
+      </tr>
+      <tr>
+        <td class="lbl">
+          Código de consulta da certidão permanente de registo comercial
+        </td>
+        <td>
+          {{ formData.titular_cod_cert_reg_comercial }}
+        </td>
+      </tr>
+      <tr>
+        <td class="lbl">
+          Código da atividade económica (CAE)
+        </td>
+        <td>
+          {{ formData.titular_CAE }}
+        </td>
+      </tr>
+    </table>
+    <h3>
+      4.1 Morada da Sede / Domicílio Fiscal
+    </h3>
+    <table class="tbl">
+      <tr>
+        <td class="lbl">
+          Código postal
+        </td>
+        <td>
+          {{ formData.t_cp }}
+        </td>
+      </tr>
+      <tr>
+        <td class="lbl">
+          Localidade postal
+        </td>
+        <td>
+          {{ formData.t_02_localidade_postal }}
+        </td>
+      </tr>
+      <tr>
+        <td class="lbl">
+          Distrito
+        </td>
+        <td>
+          {{ formData.t_03_distrito }}
+        </td>
+      </tr>
+      <tr>
+        <td class="lbl">
+          Concelho
+        </td>
+        <td>
+          {{ formData.t_04_concelho }}
+        </td>
+      </tr>
+      <tr>
+        <td class="lbl">
+          Freguesia
+        </td>
+        <td>
+          {{ formData.t_05_freguesia }}
+        </td>
+      </tr>
+      <tr>
+        <td class="lbl">
+          Lugar
+        </td>
+        <td>
+          {{ formData.t_06_lugar }}
+        </td>
+      </tr>
+      <tr>
+        <td class="lbl">
+          Localidade
+        </td>
+        <td>
+          {{ formData.t_07_localidade }}
+        </td>
+      </tr>
+      <tr>
+        <td class="lbl">
+          Tipo de via
+        </td>
+        <td>
+          {{ formData.t_08_tipo_de_via }}
+        </td>
+      </tr>
+      <tr>
+        <td class="lbl">
+          Designação da via
+        </td>
+        <td>
+          {{ formData.t_09_designacao_via }}
+        </td>
+      </tr>
+      <tr>
+        <td class="lbl">
+          N.º porta
+        </td>
+        <td>
+          {{ mostrar(formData.t_10_numero_porta) }}
+        </td>
+      </tr>
+      <tr>
+        <td class="lbl">
+          Andar
+        </td>
+        <td>
+          {{ mostrar(formData.t_11_andar) }}
+        </td>
+      </tr>
+      <tr>
+        <td class="lbl">
+          Lado
+        </td>
+        <td>
+          {{ mostrar(formData.t_12_lado) }}
+        </td>
+      </tr>
+    </table>
+    <h3>
+      4.2 Dados da Entidade
+    </h3>
+    <table class="tbl">
+      <tr>
+        <td class="lbl">
+          Tipo de entidade
+        </td>
+        <td>
+          {{ formData.titular_tipo_entidade }}
+        </td>
+      </tr>
+      <tr>
+        <td class="lbl">
+          Natureza jurídica
+        </td>
+        <td>
+          {{ formData.titular_natureza_juridica }}
+        </td>
+      </tr>
+      <tr>
+        <td class="lbl">
+          Data de constituição
+        </td>
+        <td>
+          {{ formData.titular_data_constituicao }}
+        </td>
+      </tr>
+      <tr>
+        <td class="lbl">
+          Dimensão da entidade
+        </td>
+        <td>
+          {{ formData.titular_dimensao_entidade }}
+        </td>
+      </tr>
+      <tr>
+        <td class="lbl">
+          Data de início de atividade
+        </td>
+        <td>
+          {{ formData.titular_data_inicio }}
+        </td>
+      </tr>
+      <tr>
+        <td class="lbl">
+          Capital social
+        </td>
+        <td>
+          {{ formData.titular_capital_social }}
+        </td>
+      </tr>
+      <tr>
+        <td class="lbl">
+          Número de trabalhadores
+        </td>
+        <td>
+          {{ formData.titular_NTrabalhadores }}
+        </td>
+      </tr>
+    </table>
+    <h3>
+      4.3. Contactos da Entidade
+    </h3>
+    <table class="tbl">
+      <tr>
+        <td class="lbl">
+          E-mail
+        </td>
+        <td>
+          {{ formData.titular_email }}
+        </td>
+      </tr>
+      <tr>
+        <td class="lbl">
+          Contacto telefónico
+        </td>
+        <td>
+          {{ formData.titular_contactotelefonico }}
+        </td>
+      </tr>
+      <tr>
+        <td class="lbl">
+          Endereço de internet
+        </td>
+        <td>
+          {{ mostrar(formData.titular_website) }}
+        </td>
+      </tr>
+    </table>
+    <h2>
+      <h2>5. Gestor PME</h2>
+      <table class="tbl">
+        <tr>
+          <td class="lbl">Nome</td>
+          <td class="val">{{ formData.pme_t_trabalhadores[0].pme_t_nome }}</td>
+        </tr>
+        <tr>
+          <td class="lbl">Número de identificação fiscal</td>
+          <td class="val">{{ formData.pme_t_trabalhadores[0].pme_t_nif }}</td>
+        </tr>
+        <tr>
+          <td class="lbl">Cargo/ função</td>
+          <td class="val">{{ formData.pme_t_trabalhadores[0].pme_t_funcao }}</td>
+        </tr>
+        <tr>
+          <td class="lbl">E-mail</td>
+          <td class="val">{{ formData.pme_t_trabalhadores[0].pme_t_email }}</td>
+        </tr>
+        <tr>
+          <td class="lbl">Contacto telefónico</td>
+          <td class="val">{{ formData.pme_t_trabalhadores[0].pme_t_contactotelefonico }}</td>
+        </tr>
+      </table>
+
+      <h3>5.1 Diagnósticos</h3>
+
+      <table class="tbl">
+        <tr>
+          <td class="lbl">
+            Diagnóstico de maturidade digital da micro, pequena e média empresa (PME) - Ferramenta Maturidade Digital
+          </td>
+          <td class="val">{{ formData.pme_gestor.pme_nif }}</td>
+        </tr>
+      </table>
+
+      <div class="caixa">
+        O diagnóstico de maturidade digital é requisito obrigatório para a candidatura.
+        Caso não tenha realizado o diagnóstico, guarde o formulário e aceda à
+        <strong>
+          (<a href="https://portugaldigital.gov.pt/surveydidc/p4/survey/" target="_blank">
+            https://portugaldigital.gov.pt/surveydidc/p4/survey/
+          </a>) Ferramenta de Maturidade Digital.
+        </strong>
+        utilizando o Número de identificação de pessoa coletiva da micro, pequena e média empresa (PME) candidata.
+      </div>
+
+      <table class="tbl">
+        <tr>
+          <td class="lbl">
+            Diagnóstico de competências digitais do gestor da micro, pequena e média empresa (PME) - Ferramenta Academia
+            Portugal Digital
+          </td>
+          <td class="val">{{ formData.pme_t_trabalhadores[0].pme_t_nif }}</td>
+        </tr>
+      </table>
+
+      <div class="caixa">
+        O diagnóstico de competências digitais é requisito obrigatório para a candidatura.
+        Caso não tenha realizado o diagnóstico, guarde o formulário e aceda ao site da
+        <strong>
+          (<a href="https://academiaportugaldigital.pt/testes/" target="_blank">
+            https://academiaportugaldigital.pt/testes/
+          </a>) Academia Portugal Digital.
+        </strong>
+        utilizando o número de identificação fiscal do gestor e/ou trabalhador da micro, pequena e média empresa (PME).
+      </div>
+
+      <table class="tbl">
+        <tr>
+          <td class="lbl">Estado do diagnóstico de competências digitais do gestor da micro, pequena e média empresa
+            (PME) - Ferramenta Academia Portugal Digital</td>
+          <td class="val">{{ mostrar(formData.pme_t_trabalhadores[0].pme_t_status_diagnostico) }}</td>
+        </tr>
+        <tr>
+          <td class="lbl">Mensagem relativa ao estado do diagnóstico de competências digitais do gestor da micro,
+            pequena e média empresa (PME) - Ferramenta Academia Portugal Digital</td>
+          <td class="val">{{ mostrar(formData.pme_t_trabalhadores[0].pme_t_msg_diagnostico) }}</td>
+        </tr>
+      </table>
+
+      <h2>6. Trabalhador da PME</h2>
+      <table class="tbl">
+        <tr>
+          <td class="lbl">
+            Nome
+          </td>
+          <td>
+            {{ formData.pme_gestor.pme_nome }}
+          </td>
+        </tr>
+        <tr>
+          <td class="lbl">
+            Número de identificação fiscal
+          </td>
+          <td>
+            {{ formData.pme_gestor.pme_nif }}
+          </td>
+        </tr>
+        <tr>
+          <td class="lbl">
+            Cargo/ função
+          </td>
+          <td>
+            {{ formData.pme_gestor.pme_funcao }}
+          </td>
+        </tr>
+        <tr>
+          <td class="lbl">
+            E-mail
+          </td>
+          <td>
+            {{ formData.pme_gestor.pme_email }}
+          </td>
+        </tr>
+        <tr>
+          <td class="lbl">
+            Contacto telefónico
+          </td>
+          <td>
+            {{ formData.pme_gestor.pme_contactotelefonico }}
+          </td>
+        </tr>
+      </table>
+      <h3>
+
+        <h3>6.1 Diagnósticos</h3>
+
+        <table class="tbl">
+          <tr>
+            <td class="lbl">
+              Diagnóstico de competências digitais do trabalhador da micro, pequena e média empresa (PME) - Ferramenta
+              Academia Portugal Digital </td>
+            <td class="val">{{ formData.pme_gestor.pme_nif }}</td>
+          </tr>
+        </table>
+
+        <div class="caixa">
+          O diagnóstico de competências digitais é requisito obrigatório para a candidatura.
+          Caso não tenha realizado o diagnóstico, guarde o formulário e aceda ao site da
+          <strong>
+            (<a href="https://academiaportugaldigital.pt/testes/" target="_blank">
+              https://academiaportugaldigital.pt/testes/
+            </a>) Academia Portugal Digital.
+          </strong>
+          utilizando o número de identificação fiscal do gestor e/ou trabalhador da micro, pequena e média empresa
+          (PME).
+        </div>
+
+        <table class="tbl">
+          <tr>
+            <td class="lbl">Estado do diagnóstico de competências digitais do gestor da micro, pequena e média empresa
+              (PME) - Ferramenta Academia Portugal Digital</td>
+            <td class="val">{{ mostrar(formData.pme_t_trabalhadores[0].pme_t_status_diagnostico) }}</td>
+          </tr>
+          <tr>
+            <td class="lbl">Mensagem relativa ao estado do diagnóstico de competências digitais do gestor da micro,
+              pequena e média empresa (PME) - Ferramenta Academia Portugal Digital</td>
+            <td class="val">{{ mostrar(formData.pme_t_trabalhadores[0].pme_t_msg_diagnostico) }}</td>
+          </tr>
+        </table>
+
+        <h2>7. Serviços de Transição Digital e Indicadores</h2>
+        <table class="tbl">
+          <tr>
+            <td class="lbl">Categoria</td>
+            <td class="val">{{ formData.servico_categoria_ddl }}</td>
+          </tr>
+          <tr>
+            <td class="lbl">Serviço</td>
+            <td class="val">{{ formData.servico_designacao_ddl }}</td>
+          </tr>
+          <tr>
+            <td class="lbl">Fornecedor</td>
+            <td class="val">{{ formData.servico_entidade_ddl }}</td>
+          </tr>
+          <tr>
+            <td class="lbl">Proposta comercial</td>
+            <td class="val">
+              <a href="{{ formData.servico_descricao_ddl }}" target="_blank">
+                Ver proposta comercial
+              </a>
+            </td>
+          </tr>
+          <tr>
+            <td class="lbl">Alcance previsto da medida</td>
+            <td class="val">{{ formData.servico_alcance_medida }}</td>
+          </tr>
+          <tr>
+            <td class="lbl">Breve fundamentação para a escolha do serviço</td>
+            <td class="val">{{ formData.servico_fundamentacao }}</td>
+          </tr>
+          <tr>
+            <td class="lbl">Breve descrição dos benefícios previstos com esta ação</td>
+            <td class="val">{{ formData.servico_beneficios }}</td>
+          </tr>
+        </table>
+        <h2>8. Critérios de Elegibilidade do Beneficiário</h2>
+
+        <p>A Entidade Beneficiária declara que:</p>
+
+        <table class="tbl">
+          <tr>
+            <td class="lbl">Está legalmente constituída, até 31/12/2023, enquanto PME.</td>
+            <td>{{ "a) Cumpre" if formData.Criterios_legalidade else "a) Não cumpre" }}</td>
+          </tr>
+          <tr>
+            <td class="lbl">Tem a situação tributária e contributiva regularizada perante, respetivamente, a
+              administração fiscal e a segurança social.</td>
+            <td>{{ "a) Cumpre" if formData.Criterio_situacao_tributaria else "a) Não cumpre" }}</td>
+          </tr>
+          <tr>
+            <td class="lbl">Dispõe de contabilidade organizada nos termos da legislação aplicável.</td>
+            <td>{{ "a) Cumpre" if formData.Criterio_contabilidade_organizada else "a) Não cumpre" }}</td>
+          </tr>
+          <tr>
+            <td class="lbl">Tem a situação regularizada em matéria de exercício de atividade no território abrangido
+              pela tipologia das operações e investimentos a que se candidatam, incluindo o cumprimento da legislação
+              ambiental aplicável. Nos termos do Decreto-Lei n.º 127/2013, de 30 de agosto.</td>
+            <td>{{ "a) Cumpre" if formData.Criterio_Decreto_Lei_127_2013 else "a) Não cumpre" }}</td>
+          </tr>
+          <tr>
+            <td class="lbl">Possui, ou pode assegurar até à data da candidatura, os meios técnicos, físicos e
+              financeiros e os recursos humanos necessários ao desenvolvimento da operação.</td>
+            <td>{{ "a) Cumpre" if formData.Criterio_candidatura else "a) Não cumpre" }}</td>
+          </tr>
+          <tr>
+            <td class="lbl">Tem a situação regularizada em matéria de reposições, no âmbito de financiamentos dos fundos
+              europeus estruturais e de investimento (FEEI).</td>
+            <td>{{ "a) Cumpre" if formData.Criterio_financiamento_FEEI else "a) Não cumpre" }}</td>
+          </tr>
+          <tr>
+            <td class="lbl">Não configura uma "empresa em dificuldade", conforme definido nas orientações comunitárias.
+            </td>
+            <td>{{ "a) Cumpre" if formData.Criterio_empresa_dificuldade else "a) Não cumpre" }}</td>
+          </tr>
+          <tr>
+            <td class="lbl">Não se trata de empresa sujeita a uma injunção de recuperação pendente.</td>
+            <td>{{ "a) Cumpre" if formData.Criterio_injuncao_recuperacao else "a) Não cumpre" }}</td>
+          </tr>
+          <tr>
+            <td class="lbl">Cumpre as regras aplicáveis aos auxílios de Estado.</td>
+            <td>{{ "a) Cumpre" if formData.Criterio_regras_aplicaveis else "a) Não cumpre" }}</td>
+          </tr>
+          <tr>
+            <td class="lbl">Não detém, nem nunca deteve, capital superior a 50% em empresa inadimplente perante fundos
+              europeus.</td>
+            <td>{{ "a) Cumpre" if formData.Criterio_capital else "a) Não cumpre" }}</td>
+          </tr>
+          <tr>
+            <td class="lbl">Respeita as obrigações decorrentes do Código dos Contratos Públicos.</td>
+            <td>{{ "a) Cumpre" if formData.Criterio_obrigacoes else "a) Não cumpre" }}</td>
+          </tr>
+          <tr>
+            <td class="lbl">Cumprirá os requisitos de comunicação, informação e publicidade relativos à origem do
+              financiamento, conforme o regulamento (UE) 2021/241.</td>
+            <td>{{ "a) Cumpre" if formData.Criterio_comunicacao else "a) Não cumpre" }}</td>
+          </tr>
+          <tr>
+            <td class="lbl">As aquisições efetuadas não terão outro tipo de financiamento comunitário.</td>
+            <td>{{ "a) Cumpre" if formData.Criterio_financiamento else "a) Não cumpre" }}</td>
+          </tr>
+          <tr>
+            <td class="lbl">Cumpre os requisitos de informação, comunicação e publicidade conforme disposto no artigo
+              34.º do regulamento (UE) 2021/241.</td>
+            <td>{{ "a) Cumpre" if formData.Criterio_constantes_candidatura else "a) Não cumpre" }}</td>
+          </tr>
+          <tr>
+            <td class="lbl">Autoriza a utilização dos dados desta candidatura para efeitos de avaliação e decisão.</td>
+            <td>{{ "a) Cumpre" if formData.Criterio_requisitos else "a) Não cumpre" }}</td>
+          </tr>
+          <tr>
+            <td class="lbl">Cumpre as obrigações relativas ao tratamento de dados pessoais, nos termos do RGPD.</td>
+            <td>{{ "a) Cumpre" if formData.Criterio_obrigacoes_dados_pessoais else "a) Não cumpre" }}</td>
+          </tr>
+          <tr>
+            <td class="lbl">Integra toda a informação exigida no âmbito da instrução do processo de candidatura.</td>
+            <td>{{ "a) Cumpre" if formData.Criterio_processo_candidatura else "a) Não cumpre" }}</td>
+          </tr>
+          <tr>
+            <td class="lbl">Tomou conhecimento e está em condições de cumprir com as obrigações estabelecidas no ponto
+              18 do aviso de abertura.</td>
+            <td>{{ "a) Cumpre" if formData.Criterio_aviso_abertura else "a) Não cumpre" }}</td>
+          </tr>
+          <tr>
+            <td class="lbl">Está em conformidade com as disposições legais e regulamentares aplicáveis.</td>
+            <td>{{ "a) Cumpre" if formData.Criterio_disposicoes_legais else "a) Não cumpre" }}</td>
+          </tr>
+          <tr>
+            <td class="lbl">Compromete-se a apresentar as evidências solicitadas nos pontos 6 e 7 do aviso.</td>
+            <td>{{ "a) Cumpre" if formData.Criterio_abertura_candidaturas else "a) Não cumpre" }}</td>
+          </tr>
+        </table>
+
+        <h2>9. Documentos a Anexar</h2>
+
+    </h2>
+    <table class="tbl">
+      <tr>
+        <td class="lbl">
+          Informação empresarial simplificada (IES) dos últimos 3 anos.
+        </td>
+        <td>
+          {{ formData.doc_IES.filename }}
+        </td>
+      </tr>
+      <tr>
+        <td class="lbl">
+          Certidão de situação tributária
+        </td>
+        <td>
+          {{ formData.doc_nao_divida.filename }}
+        </td>
+      </tr>
+      <tr>
+        <td class="lbl">
+          Declaração de situação contributiva
+        </td>
+        <td>
+          {{ formData.doc_nao_divida_SS.filename }}
+        </td>
+      </tr>
+      <tr>
+        <td class="lbl">
+          Extrato de remunerações - Janeiro 2024
+        </td>
+        <td>
+          {{ formData.doc_extrato_remuneracoes.filename }}
+        </td>
+      </tr>
+      <tr>
+        <td class="lbl">
+          Extrato de remunerações - mês anterior
+        </td>
+        <td>
+          {{ formData.doc_extrato_remuneracoes_mes_anterior.filename }}
+        </td>
+      </tr>
+      <tr>
+        <td class="lbl">
+          Comprovativo de certificação de PME
+        </td>
+        <td>
+          {{ formData.doc_PME.filename }}
+        </td>
+      </tr>
+      <tr>
+        <td class="lbl">
+          Código de Registo Central de Beneficiário Efetivo
+        </td>
+        <td>
+          {{ formData.doc_beneficiario.filename }}
+        </td>
+      </tr>
+    </table>
+    <h2>
+      10. Declaração</h2>
+
+    <p>Termo de Aceitação</p>
+
+    {% if formData.declaro1 %}
+
+    p class="ctx">
+    Nos termos do artigo 14.º do Regulamento anexo à Portaria n.º 135-A/2022, de 1 de abril, com as alterações
+    introduzidas pela Portaria n.º 43/2023, de 10 de fevereiro, e pela Portaria n.º 396-B/2023, de 27 de novembro,
+    declaro que aceito nos seus precisos termos, caso seja atribuído o benefício pelo IAPMEI - Agência para a
+    Competitividade e Inovação, I.P., de concessão de um Subsídio Não Reembolsável, no montante global de 10.000,00 €
+    (dez mil euros), no âmbito do Aviso de Abertura de Candidatura (AAC) n.º 22/C16-i02/2025.
+    </p>
+
+    <p class="ctx">
+      Declaro que tenho perfeito conhecimento e que assumo o compromisso de respeitar todas as disposições legais e
+      regulamentares aplicáveis, em conformidade com o estabelecido na Portaria n.º 135-A/2022, nomeadamente as
+      constantes no artigo 18.º, com as alterações introduzidas, e que aprovou o sistema de incentivos "Empresas 4.0",
+      tal como se enumeram de seguida:
+    </p>
+
+    <ul class="ctx">
+      <li>a) Executar os investimentos nos termos e condições aprovadas;</li>
+      <li>b) Permitir o acesso aos locais de realização dos projetos e aos documentos de controlo;</li>
+      <li>c) Conservar os dados em suporte digital conforme legislação;</li>
+      <li>d) Proceder à publicitação dos apoios conforme legislação aplicável;</li>
+      <li>e) Manter as condições legais para o exercício da atividade;</li>
+      <li>f) Repor montantes indevidamente recebidos em até 30 dias após notificação;</li>
+      <li>g) Manter situação tributária e contributiva regularizada;</li>
+      <li>h) Ter situação regularizada em matéria de reposições de fundos europeus;</li>
+      <li>i) Adotar comportamentos que respeitem os princípios da boa gestão de dinheiros públicos;</li>
+      <li>j) Disponibilizar os elementos solicitados pelas entidades competentes;</li>
+      <li>k) Comunicar alterações relevantes que ponham em causa os pressupostos do projeto;</li>
+      <li>l) Não onerar ou alienar bens adquiridos sem prévia autorização, por pelo menos 5 anos (ou 3 no caso de PME);
+      </li>
+      <li>m) Manter o investimento produtivo conforme localização e prazos estabelecidos;</li>
+      <li>n) Iniciar o projeto no prazo máximo de 6 meses após a notificação da decisão;</li>
+      <li>o) Concluir o projeto com resultados concretizados até 31 de dezembro de 2025, salvo exceções legais.</li>
+    </ul>
+    <br><br><br><br><br><br><br>
+
+    <div id="termo-aceitacao">
+      <div class="ctx" id="termo-aceitacao-li">
+        <p><span class="chkbox">✓</span>Li e aceito.</p>
+      </div>
+
+
+      <div class="assinatura-bloco">
+        <p><strong>Assinatura do requerente</strong></p>
+        <div class="assinatura">assinatura.png</div>
+      </div>
+    </div>
+
+    <p class="ctx">
+      Este formulário foi preenchido pelo utilizador através do portal <strong>GovPT</strong>
+      (<a href="https://www.gov.pt" target="_blank">https://www.gov.pt</a>).<br />
+      Nas situações em que o serviço está sujeito ao pagamento de uma taxa à entidade competente,
+      este documento só é válido quando acompanhado do respetivo comprovativo de pagamento.
+    </p>
+    {% endif %}
+
+</body>
+
+</html>

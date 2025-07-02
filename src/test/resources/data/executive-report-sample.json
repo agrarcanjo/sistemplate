@@ -1,0 +1,169 @@
+{
+  "title": "Relatório Executivo - Q1 2024",
+  "subtitle": "Análise de Performance e Resultados",
+  "date": "2024-03-31",
+  "period": "Janeiro - Março 2024",
+  "author": "Equipe de Analytics",
+  "version": "2.1",
+  "company": {
+    "name": "TechCorp Solutions",
+    "address": "Av. Paulista, 1000 - São Paulo/SP",
+    "logo": "company_logo"
+  },
+  "executiveSummary": "Este relatório apresenta os resultados do primeiro trimestre de 2024, destacando um crescimento de 25% nas vendas e expansão para novos mercados.",
+  "kpis": [
+    {
+      "value": "R$ 2.5M",
+      "label": "Receita Total"
+    },
+    {
+      "value": "25%",
+      "label": "Crescimento"
+    },
+    {
+      "value": "1,250",
+      "label": "Novos Clientes"
+    },
+    {
+      "value": "98.5%",
+      "label": "Satisfação"
+    }
+  ],
+  "charts": [
+    {
+      "title": "Evolução das Vendas Mensais",
+      "image": "sales_chart",
+      "description": "Gráfico mostrando crescimento consistente ao longo do trimestre"
+    },
+    {
+      "title": "Distribuição por Região",
+      "image": "region_chart",
+      "description": "Análise da performance por região geográfica"
+    }
+  ],
+  "dataTable": {
+    "title": "Vendas por Produto",
+    "headers": ["Produto", "Vendas (R$)", "Unidades", "Crescimento (%)"],
+    "rows": [
+      ["Software Premium", "850.000", "340", "32%"],
+      ["Consultoria", "650.000", "130", "18%"],
+      ["Suporte Técnico", "420.000", "280", "15%"],
+      ["Treinamentos", "280.000", "95", "45%"]
+    ]
+  },
+  "goals": [
+    {
+      "name": "Meta de Receita Anual",
+      "current": 2500000,
+      "target": 10000000,
+      "percentage": 25
+    },
+    {
+      "name": "Novos Clientes",
+      "current": 1250,
+      "target": 2000,
+      "percentage": 62
+    },
+    {
+      "name": "Satisfação do Cliente",
+      "current": 98.5,
+      "target": 95,
+      "percentage": 100
+    }
+  ],
+  "alerts": [
+    {
+      "type": "success",
+      "title": "Meta Superada",
+      "message": "Satisfação do cliente superou a meta em 3.5 pontos percentuais"
+    },
+    {
+      "type": "warning",
+      "title": "Atenção",
+      "message": "Crescimento no setor de hardware abaixo do esperado"
+    },
+    {
+      "type": "danger",
+      "title": "Ação Necessária",
+      "message": "Estoque de produtos premium está baixo"
+    }
+  ],
+  "analysis": [
+    {
+      "title": "Performance de Vendas",
+      "content": "O primeiro trimestre apresentou resultados excepcionais com crescimento de 25% em relação ao mesmo período do ano anterior.",
+      "items": [
+        {
+          "title": "Principais Drivers",
+          "description": "Lançamento de novos produtos e expansão da equipe comercial"
+        },
+        {
+          "title": "Desafios",
+          "description": "Competição acirrada no mercado de software empresarial"
+        }
+      ]
+    },
+    {
+      "title": "Análise de Mercado",
+      "content": "O mercado apresentou sinais de recuperação após período de instabilidade econômica.",
+      "items": [
+        {
+          "title": "Oportunidades",
+          "description": "Crescente demanda por soluções digitais"
+        },
+        {
+          "title": "Ameaças",
+          "description": "Entrada de novos concorrentes internacionais"
+        }
+      ]
+    }
+  ],
+  "recommendations": [
+    {
+      "title": "Expansão da Equipe Comercial",
+      "description": "Contratar 5 novos vendedores para atender a demanda crescente",
+      "priority": "Alta"
+    },
+    {
+      "title": "Investimento em Marketing Digital",
+      "description": "Aumentar orçamento de marketing digital em 30%",
+      "priority": "Média"
+    },
+    {
+      "title": "Melhoria no Atendimento",
+      "description": "Implementar chatbot para suporte 24/7",
+      "priority": "Baixa"
+    }
+  ],
+  "nextSteps": [
+    {
+      "action": "Contratar novos vendedores",
+      "deadline": "2024-04-30",
+      "responsible": "RH"
+    },
+    {
+      "action": "Lançar campanha de marketing",
+      "deadline": "2024-04-15",
+      "responsible": "Marketing"
+    },
+    {
+      "action": "Revisar estratégia de preços",
+      "deadline": "2024-05-15",
+      "responsible": "Comercial"
+    }
+  ],
+  "signatures": [
+    {
+      "name": "Maria Santos",
+      "title": "Diretora Comercial",
+      "date": "31/03/2024"
+    },
+    {
+      "name": "João Oliveira",
+      "title": "CEO",
+      "date": "31/03/2024"
+    }
+  ],
+  "generatedDate": "2024-03-31 14:30:00",
+  "confidential": true
+}

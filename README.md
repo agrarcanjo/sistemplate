@@ -86,6 +86,7 @@ A API oferece os seguintes endpoints principais:
 }
 ```
 
+
 ## Empacotamento e execução da aplicação
 
 A aplicação pode ser empacotada usando:
