@@ -1,11 +1,11 @@
 package pt.ama.model;
 
 import io.quarkus.mongodb.panache.common.MongoEntity;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import lombok.Data;
-import org.bson.types.ObjectId;
-import io.quarkus.mongodb.panache.common.MongoEntity;
 import org.bson.codecs.pojo.annotations.BsonId;
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import org.bson.types.ObjectId;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
@@ -15,26 +15,28 @@ import java.util.List;
 @MongoEntity(collection = "templates")
 public class Template {
     @BsonId
-    @JsonIgnore
     private ObjectId id;
     
+    @NotBlank(message = "Name is mandatory")
     private String name;
+
+    @NotNull(message = "Type is mandatory")
     private DocumentType type;
-    private String content; // HTML content
+
+    @NotBlank(message = "Content is mandatory")
+    private String content;
     private String description;
     private String author;
     private BigDecimal version;
     private String owner;
     private String manager;
     private boolean active = true;
-    
-    // Novos campos para melhor gestão
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
-    private String category; // Para organizar templates por categoria
-    private List<String> tags; // Tags para facilitar busca
+    private String category;
+    private List<String> tags;
     private TemplateMetadata metadata;
-    
+
     @Data
     public static class TemplateMetadata {
         private List<String> requiredFields; // Campos obrigatórios no JSON
@@ -43,7 +45,7 @@ public class Template {
         private String sampleData; // JSON de exemplo para teste
         private String documentation; // Documentação do template
     }
-    
+
     @Data
     public static class ImageReference {
         private String placeholder; // Nome do placeholder no template (ex: {logo})

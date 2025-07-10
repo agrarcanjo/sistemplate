@@ -7,6 +7,7 @@ import pt.ama.model.Template;
 import pt.ama.model.DocumentRequest;
 import pt.ama.repository.TemplateRepository;
 import pt.ama.model.DocumentType;
+import org.jboss.logging.Logger;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -14,6 +15,8 @@ import java.util.Map;
 
 @ApplicationScoped
 public class TemplateService {
+    
+    private static final Logger LOG = Logger.getLogger(TemplateService.class);
     
     @Inject
     TemplateRepository templateRepository;
@@ -26,7 +29,14 @@ public class TemplateService {
     }
 
     public Template findByName(String name) {
-        return templateRepository.findByName(name);
+        LOG.infof("TemplateService: Buscando template com nome: '%s'", name);
+            Template template = templateRepository.findByName(name);
+        if (template == null) {
+            LOG.warnf("TemplateService: Template não encontrado: '%s'", name);
+        } else {
+            LOG.infof("TemplateService: Template encontrado: '%s', active=%s", template.getName(), template.isActive());
+        }
+        return template;
     }
 
     public List<Template> findByType(DocumentType type) {
@@ -38,44 +48,49 @@ public class TemplateService {
     }
 
     public void save(Template template) {
+        LOG.infof("TemplateService: Salvando template: '%s'", template.getName());
+        
+        if (!template.isActive() && template.getName() != null) {
+            template.setActive(true);
+            LOG.infof("TemplateService: Definindo template como ativo: '%s'", template.getName());
+        }
+        
         template.setCreatedAt(LocalDateTime.now());
         template.setUpdatedAt(LocalDateTime.now());
         templateRepository.persist(template);
+        
+        LOG.infof("TemplateService: Template salvo com sucesso: '%s', active=%s", 
+                 template.getName(), template.isActive());
     }
 
     public void update(Template template) {
+        LOG.infof("TemplateService: Atualizando template: '%s'", template.getName());
         template.setUpdatedAt(LocalDateTime.now());
         templateRepository.update(template);
     }
 
     public void delete(String name) {
+        LOG.infof("TemplateService: Deletando template: '%s'", name);
         templateRepository.deleteByName(name);
     }
 
     public boolean exists(String name) {
-        return templateRepository.exists(name);
+        boolean exists = templateRepository.exists(name);
+        LOG.infof("TemplateService: Template '%s' existe: %s", name, exists);
+        return exists;
     }
 
     public List<Template> findByTemplateVersion(String name) {
         return templateRepository.findByTemplateVersion(name);
     }
 
-    // Método atualizado para suportar JsonNode
     public byte[] generatePdf(String templateName, JsonNode data, DocumentRequest.PdfOptions options) {
+        LOG.infof("TemplateService: Gerando PDF para template: '%s'", templateName);
         Template template = findByName(templateName);
         if (template == null) {
             throw new RuntimeException("Template not found: " + templateName);
         }
         return pdfGenerator.generatePdf(template.getContent(), data, options);
-    }
-    
-    // Método de compatibilidade com versão anterior
-    public byte[] generatePdf(String templateName, Map<String, Object> data) {
-        Template template = findByName(templateName);
-        if (template == null) {
-            throw new RuntimeException("Template not found: " + templateName);
-        }
-        return pdfGenerator.generatePdf(template.getContent(), data);
     }
     
     public List<Template> findByCategory(String category) {

@@ -85,10 +85,10 @@
             <version>4.0.5</version>
         </dependency>
         <!-- Dependência para upload de arquivos -->
-        <dependency>
-            <groupId>io.quarkus</groupId>
-            <artifactId>quarkus-resteasy-reactive-multipart</artifactId>
-        </dependency>
+<!--        <dependency>-->
+<!--            <groupId>io.quarkus</groupId>-->
+<!--            <artifactId>quarkus-resteasy-reactive-multipart</artifactId>-->
+<!--        </dependency>-->
         <!-- Dependência para processamento de imagens -->
         <dependency>
             <groupId>org.apache.commons</groupId>

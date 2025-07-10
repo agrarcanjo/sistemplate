@@ -9,18 +9,17 @@ import lombok.Data;
 public class DocumentRequest {
     @NotBlank(message = "Template name is required")
     private String templateName;
-    
+
     @NotNull(message = "Data is required")
     private JsonNode data;
-    
-    // Configurações opcionais para geração do PDF
+
     private PdfOptions options;
-    
+
     @Data
     public static class PdfOptions {
         private String filename;
-        private String orientation = "portrait"; // portrait ou landscape
-        private String pageSize = "A4"; // A4, A3, LETTER, etc.
+        private String orientation = "portrait";
+        private String pageSize = "A4";
         private Boolean includeMetadata = true;
         private String author;
         private String subject;

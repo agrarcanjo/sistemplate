@@ -1,6 +1,9 @@
 package pt.ama.service;
 
+import com.fasterxml.jackson.databind.JsonNode;
 import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.validation.constraints.NotNull;
+
 import java.util.Map;
 
 @ApplicationScoped
@@ -13,5 +16,9 @@ public class EmailGenerator {
         System.out.println("Content: " + processedContent);
         System.out.println("Metadata: " + metadata);
         return ("Email Body: " + processedContent).getBytes();
+    }
+
+    public byte[] generateEmail(String processedContent, @NotNull(message = "Data is required") JsonNode data) {
+        return null;
     }
 }

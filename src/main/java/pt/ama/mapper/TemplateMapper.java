@@ -26,16 +26,14 @@ public class TemplateMapper {
         template.setManager(request.getManager());
         template.setCategory(request.getCategory());
         template.setTags(request.getTags());
-        
-        // Mapear metadados
+
         if (request.getMetadata() != null) {
             Template.TemplateMetadata metadata = new Template.TemplateMetadata();
             metadata.setRequiredFields(request.getMetadata().getRequiredFields());
             metadata.setOptionalFields(request.getMetadata().getOptionalFields());
             metadata.setSampleData(request.getMetadata().getSampleData());
             metadata.setDocumentation(request.getMetadata().getDocumentation());
-            
-            // Mapear referências de imagens
+
             if (request.getMetadata().getImageReferences() != null) {
                 List<Template.ImageReference> imageRefs = request.getMetadata().getImageReferences()
                     .stream()
@@ -43,7 +41,7 @@ public class TemplateMapper {
                     .collect(Collectors.toList());
                 metadata.setImageReferences(imageRefs);
             }
-            
+
             template.setMetadata(metadata);
         }
 
@@ -69,16 +67,14 @@ public class TemplateMapper {
         response.setUpdatedAt(template.getUpdatedAt());
         response.setCategory(template.getCategory());
         response.setTags(template.getTags());
-        
-        // Mapear metadados
+
         if (template.getMetadata() != null) {
             TemplateResponse.TemplateMetadataResponse metadata = new TemplateResponse.TemplateMetadataResponse();
             metadata.setRequiredFields(template.getMetadata().getRequiredFields());
             metadata.setOptionalFields(template.getMetadata().getOptionalFields());
             metadata.setSampleData(template.getMetadata().getSampleData());
             metadata.setDocumentation(template.getMetadata().getDocumentation());
-            
-            // Mapear referências de imagens
+
             if (template.getMetadata().getImageReferences() != null) {
                 List<TemplateResponse.ImageReferenceResponse> imageRefs = template.getMetadata().getImageReferences()
                     .stream()
@@ -86,7 +82,7 @@ public class TemplateMapper {
                     .collect(Collectors.toList());
                 metadata.setImageReferences(imageRefs);
             }
-            
+
             response.setMetadata(metadata);
         }
 
@@ -116,16 +112,14 @@ public class TemplateMapper {
         template.setManager(request.getManager());
         template.setCategory(request.getCategory());
         template.setTags(request.getTags());
-        
-        // Atualizar metadados
+
         if (request.getMetadata() != null) {
             Template.TemplateMetadata metadata = new Template.TemplateMetadata();
             metadata.setRequiredFields(request.getMetadata().getRequiredFields());
             metadata.setOptionalFields(request.getMetadata().getOptionalFields());
             metadata.setSampleData(request.getMetadata().getSampleData());
             metadata.setDocumentation(request.getMetadata().getDocumentation());
-            
-            // Mapear referências de imagens
+
             if (request.getMetadata().getImageReferences() != null) {
                 List<Template.ImageReference> imageRefs = request.getMetadata().getImageReferences()
                     .stream()
@@ -133,7 +127,7 @@ public class TemplateMapper {
                     .collect(Collectors.toList());
                 metadata.setImageReferences(imageRefs);
             }
-            
+
             template.setMetadata(metadata);
         }
     }
@@ -146,7 +140,7 @@ public class TemplateMapper {
         imageRef.setRequired(request.isRequired());
         return imageRef;
     }
-    
+
     private TemplateResponse.ImageReferenceResponse mapImageReferenceResponse(Template.ImageReference imageRef) {
         TemplateResponse.ImageReferenceResponse response = new TemplateResponse.ImageReferenceResponse();
         response.setPlaceholder(imageRef.getPlaceholder());

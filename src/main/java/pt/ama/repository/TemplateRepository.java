@@ -5,14 +5,18 @@ import jakarta.enterprise.context.ApplicationScoped;
 import pt.ama.model.DocumentType;
 import pt.ama.model.Template;
 import org.bson.types.ObjectId;
+import org.jboss.logging.Logger;
 
 import java.util.List;
 
 @ApplicationScoped
 public class TemplateRepository implements PanacheMongoRepositoryBase<Template, ObjectId> {
 
+    private static final Logger LOG = Logger.getLogger(TemplateRepository.class);
+
     public Template findByName(String name) {
-        return find("name = ?1 and active = true", name).firstResult();
+        LOG.infof("Buscando template com nome: '%s'", name);
+        return find("{'name': {'$regex': ?1, '$options': 'i'}, 'active': true}", "^" + name + "$").firstResult();
     }
 
     public List<Template> findByType(DocumentType type) {
@@ -23,8 +27,8 @@ public class TemplateRepository implements PanacheMongoRepositoryBase<Template, 
         return find("name like ?1 and active = true", ".*" + namePattern + ".*").list();
     }
 
-    public long deleteByName(String name) {
-        return delete("name = ?1", name);
+    public void deleteByName(String name) {
+        delete("name = ?1", name);
     }
 
     public boolean exists(String name) {

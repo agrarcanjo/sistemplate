@@ -13,7 +13,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.util.List;
 
-@Path("/api/images")
+// @Path("/api/images")
 @Produces(MediaType.APPLICATION_JSON)
 public class ImageResource {
     
