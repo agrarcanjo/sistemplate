@@ -1,4 +1,4 @@
-package pt.ama.model;
+package pt.ama.dto;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import jakarta.validation.constraints.NotBlank;

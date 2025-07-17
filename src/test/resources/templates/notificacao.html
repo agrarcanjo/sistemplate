@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <style>
+        @page {
+            size: A4;
+            margin: 2.5cm 2cm 4cm 2cm;
+            @bottom-center {
+                content: "Agência para a Modernização Administrativa, I.P. | Rua de Santa Marta, n.º 55 | 1169-210 Lisboa | Telefone: (+351) 217 991 000 | www.ama.gov.pt";
+                font-size: 9pt;
+                color: #666;
+                text-align: center;
+                width: 100%;
+            }
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            font-size: 12pt;
+            line-height: 1.3;
+            color: #000;
+            margin: 0;
+            padding: 0;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .header h1 {
+            font-size: 16pt;
+            font-weight: bold;
+            margin: 0;
+            color: #000;
+        }
+
+        .processo-line {
+            text-align: center;
+            font-size: 12pt;
+            margin-bottom: 30px;
+        }
+
+        .info-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 25px;
+        }
+
+        .info-table td {
+            padding: 4px 8px;
+            font-size: 11pt;
+            vertical-align: top;
+        }
+
+        .info-label {
+            font-weight: bold;
+            width: 25%;
+        }
+
+        .content {
+            margin: 25px 0;
+            text-align: justify;
+            line-height: 1.4;
+        }
+
+        .content p {
+            margin-bottom: 12px;
+        }
+
+        .dados-requerente {
+            margin: 25px 0;
+        }
+
+        .dados-requerente h3 {
+            font-size: 12pt;
+            font-weight: bold;
+            margin: 0 0 10px 0;
+            text-decoration: underline;
+        }
+
+        .dados-titular {
+            margin: 15px 0;
+        }
+
+        .dados-titular h3 {
+            font-size: 12pt;
+            font-weight: bold;
+            margin: 0 0 10px 0;
+            text-decoration: underline;
+        }
+
+        .assinatura {
+            margin-top: 50px;
+            text-align: center;
+        }
+
+        .data-assinatura {
+            margin-bottom: 20px;
+        }
+
+        .bold {
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>Notificação</h1>
+    </div>
+
+    <div class="processo-line">
+        <span class="bold">Processo n.º {numero_processo}</span>
+    </div>
+
+    <table class="info-table">
+        <tr>
+            <td class="info-label">Data de realização:</td>
+            <td>{data_realizacao}</td>
+            <td class="info-label">Contacto:</td>
+            <td>{contato}</td>
+        </tr>
+        <tr>
+            <td class="info-label">Entidade:</td>
+            <td>{entidade}</td>
+            <td class="info-label">Número do pedido:</td>
+            <td>{numero_pedido}</td>
+        </tr>
+        <tr>
+            <td class="info-label">Nome do serviço:</td>
+            <td colspan="3">{nome_servico}</td>
+        </tr>
+        <tr>
+            <td class="info-label">Tipo de comunicação:</td>
+            <td colspan="3">{tipo_comunicacao}</td>
+        </tr>
+    </table>
+
+    <div class="content">
+        <p><span class="bold">Exmo(a). Sr(a). {nome},</span></p>
+        
+        <p>Vimos por este meio comunicar-lhe que o seu pedido foi analisado e que a decisão tomada foi a seguinte:</p>
+        
+        <p><span class="bold">DEFERIDO</span></p>
+        
+        <p>Esta comunicação é feita nos termos do artigo 114.º do Código do Procedimento Administrativo.</p>
+    </div>
+
+    <div class="dados-requerente">
+        <h3>Dados do requerente</h3>
+        <table class="info-table">
+            <tr>
+                <td class="info-label">Nome:</td>
+                <td>{requerente.nome}</td>
+                <td class="info-label">Email:</td>
+                <td>{requerente.email}</td>
+            </tr>
+            <tr>
+                <td class="info-label">Telemóvel:</td>
+                <td>{requerente.telemovel}</td>
+                <td class="info-label">Telefone:</td>
+                <td>{requerente.telefone}</td>
+            </tr>
+        </table>
+    </div>
+
+    <div class="dados-titular">
+        <h3>Dados do titular</h3>
+        <table class="info-table">
+            <tr>
+                <td class="info-label">NIF:</td>
+                <td>{titular.nif}</td>
+                <td class="info-label">Nome:</td>
+                <td>{titular.nome}</td>
+            </tr>
+        </table>
+    </div>
+
+    <div class="assinatura">
+        <div class="data-assinatura">
+            {data_realizacao}
+        </div>
+        <div>
+            <span class="bold">{entidade}</span>
+        </div>
+    </div>
+</body>
+</html>

@@ -36,13 +36,13 @@ public class TemplateResource extends JsonApiResource {
         return Response.ok(templateMapper.toResponseList(templates)).build();
     }
 
-//    @GET
-//    @Path("/{name}/versions")
-//    @Operation(summary = "Versões do template")
-//    public Response getAllTemplateVersions(@PathParam("name") String name) {
-//        List<Template> templates = templateService.findByTemplateVersion(name);
-//        return Response.ok(templateMapper.toResponseList(templates)).build();
-//    }
+    @GET
+    @Path("/{name}/versions")
+    @Operation(summary = "Versões do template")
+    public Response getAllTemplateVersions(@PathParam("name") String name) {
+        List<Template> templates = templateService.findByTemplateVersion(name);
+        return Response.ok(templateMapper.toResponseList(templates)).build();
+    }
 
 
     @GET
@@ -57,21 +57,21 @@ public class TemplateResource extends JsonApiResource {
         return Response.ok(response).build();
     }
 
-//    @GET
-//    @Path("/type/{type}")
-//    @Operation(summary = "Lista templates por tipo de documento")
-//    public List<TemplateResponse> getTemplatesByType(@PathParam("type") DocumentType type){
-//            List<Template> templates = templateService.findByType(type);
-//            return templateMapper.toResponseList(templates);
-//        }
+    @GET
+    @Path("/type/{type}")
+    @Operation(summary = "Lista templates por tipo de documento")
+    public List<TemplateResponse> getTemplatesByType(@PathParam("type") DocumentType type){
+            List<Template> templates = templateService.findByType(type);
+            return templateMapper.toResponseList(templates);
+        }
 
-//    @GET
-//    @Path("/search")
-//    @Operation(summary = "Busca templates por parte do nome")
-//    public List<TemplateResponse> searchTemplates(@QueryParam("name") String namePattern) {
-//        List<Template> templates = templateService.findByNameContaining(namePattern);
-//        return templateMapper.toResponseList(templates);
-//    }
+    @GET
+    @Path("/search")
+    @Operation(summary = "Busca templates por parte do nome")
+    public List<TemplateResponse> searchTemplates(@QueryParam("name") String namePattern) {
+        List<Template> templates = templateService.findByNameContaining(namePattern);
+        return templateMapper.toResponseList(templates);
+    }
 
     @POST
     @Operation(summary = "Cria um novo template")
@@ -94,45 +94,45 @@ public class TemplateResource extends JsonApiResource {
         }
     }
 
-//    @PUT
-//    @Path("/{name}")
-//    @Operation(summary = "Atualiza um template existente")
-//    public Response updateTemplate(@PathParam("name") String name, @Valid TemplateRequest templateRequest) {
-//        try {
-//            Template existingTemplate = templateService.findByName(name);
-//            if (existingTemplate == null) {
-//                return Response.status(Response.Status.NOT_FOUND)
-//                        .entity("Template não encontrado").build();
-//            }
-//
-//            templateMapper.updateEntity(existingTemplate, templateRequest);
-//            templateService.update(existingTemplate);
-//
-//            TemplateResponse response = templateMapper.toResponse(existingTemplate);
-//            return Response.ok(response).build();
-//
-//        } catch (Exception e) {
-//            return Response.status(Response.Status.BAD_REQUEST)
-//                    .entity("Erro ao atualizar template: " + e.getMessage()).build();
-//        }
-//    }
+    @PUT
+    @Path("/{name}")
+    @Operation(summary = "Atualiza um template existente")
+    public Response updateTemplate(@PathParam("name") String name, @Valid TemplateRequest templateRequest) {
+        try {
+            Template existingTemplate = templateService.findByName(name);
+            if (existingTemplate == null) {
+                return Response.status(Response.Status.NOT_FOUND)
+                        .entity("Template não encontrado").build();
+            }
 
-//    @DELETE
-//    @Path("/{name}")
-//    @Operation(summary = "Remove um template")
-//    public Response deleteTemplate(@PathParam("name") String name) {
-//        try {
-//            if (!templateService.exists(name)) {
-//                return Response.status(Response.Status.NOT_FOUND)
-//                        .entity("Template não encontrado").build();
-//            }
-//
-//            templateService.delete(name);
-//            return Response.noContent().build();
-//
-//        } catch (Exception e) {
-//            return Response.status(Response.Status.INTERNAL_SERVER_ERROR)
-//                    .entity("Erro ao deletar template: " + e.getMessage()).build();
-//        }
-//    }
+            templateMapper.updateEntity(existingTemplate, templateRequest);
+            templateService.update(existingTemplate);
+
+            TemplateResponse response = templateMapper.toResponse(existingTemplate);
+            return Response.ok(response).build();
+
+        } catch (Exception e) {
+            return Response.status(Response.Status.BAD_REQUEST)
+                    .entity("Erro ao atualizar template: " + e.getMessage()).build();
+        }
+    }
+
+    @DELETE
+    @Path("/{name}")
+    @Operation(summary = "Remove um template")
+    public Response deleteTemplate(@PathParam("name") String name) {
+        try {
+            if (!templateService.exists(name)) {
+                return Response.status(Response.Status.NOT_FOUND)
+                        .entity("Template não encontrado").build();
+            }
+
+            templateService.delete(name);
+            return Response.noContent().build();
+
+        } catch (Exception e) {
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR)
+                    .entity("Erro ao deletar template: " + e.getMessage()).build();
+        }
+    }
 }

@@ -4,7 +4,7 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
-import pt.ama.model.DocumentRequest;
+import pt.ama.dto.DocumentRequest;
 import pt.ama.model.Template;
 import io.quarkus.qute.Engine;
 import org.jboss.logging.Logger;

@@ -7,7 +7,7 @@ import com.itextpdf.kernel.pdf.PdfDocument;
 import com.itextpdf.kernel.pdf.PdfWriter;
 import jakarta.enterprise.context.ApplicationScoped;
 import org.jboss.logging.Logger;
-import pt.ama.model.DocumentRequest;
+import pt.ama.dto.DocumentRequest;
 
 import java.io.ByteArrayOutputStream;
 

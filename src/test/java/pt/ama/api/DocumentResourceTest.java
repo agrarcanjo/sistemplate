@@ -9,7 +9,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestMethodOrder;
 import org.junit.jupiter.api.MethodOrderer;
 import pt.ama.dto.TemplateRequest;
-import pt.ama.model.DocumentRequest;
+import pt.ama.dto.DocumentRequest;
 import pt.ama.model.DocumentType;
 import pt.ama.util.TemplateTestUtils;
 
