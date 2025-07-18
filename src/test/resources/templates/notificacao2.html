@@ -1,1 +1,93 @@
-<!DOCTYPE html>\n<html lang=\"pt\">\n<head>\n<meta charset=\"UTF-8\">\n    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\n    <title>Notificação - Processo {numeroPedido}</title>\n</head>\n<body>\n<p>Ao cuidado da {destinatario},</p>\n\n<p>Informamos que deu entrada no gov.pt, na data {dataSubmissao} o processo abaixo identificado ao abrigo do programa de oferta de assinaturas digitais de publicações periódicas.</p>\n\n<h3>Dados do pedido</h3>\n<table>\n    <tr>\n        <td><strong>N.º pedido</strong></td>\n        <td><strong>Nome do serviço</strong></td>\n    </tr>\n    <tr>\n        <td>{numeroPedido}</td>\n        <td>{nomeServico}</td>\n    </tr>\n    <tr>\n        <td><strong>Nº processo</strong></td>\n        <td><strong>Data submissão</strong></td>\n    </tr>\n    <tr>\n        <td>{numeroProcesso}</td>\n        <td>{dataSubmissao} {horaSubmissao}</td>\n    </tr>\n</table>\n\n<h3>Dados do requerente</h3>\n<table>\n    <tr>\n        <td><strong>Nome</strong></td>\n        <td><strong>Correio eletrónico</strong></td>\n    </tr>\n    <tr>\n        <td>{nomeRequerente}</td>\n        <td>{emailRequerente}</td>\n    </tr>\n    <tr>\n        <td><strong>Número de identificação civil</strong></td>\n        <td><strong>Número de identificação fiscal</strong></td>\n    </tr>\n    <tr>\n        <td>{numeroIdentificacaoCivil}</td>\n        <td>{numeroIdentificacaoFiscal}</td>\n    </tr>\n</table>\n\n<p>Pode acompanhar o estado do seu pedido na área reservada do portal gov.pt.<br>\n    Inicie sessão, entre na página \"Pessoal\" e procure em \"Outros serviços\".</p>\n\n<p>Se precisar de ajuda, ligue para a Linha Cidadão {telefone1} | {telefone2}, dias úteis, das {horarioAtendimento}, ou use o formulário de contacto do portal gov.pt.</p>\n\n<p><strong>gov.pt</strong><br>\n    Processado por computador</p>\n</body>\n</html>
+<!DOCTYPE html>\n<html lang=\"pt\">\n<head>\n    <meta charset=\"UTF-8\">\n    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\n    <title>Notificação - Processo {numeroProcesso}</title>\n</head>\n<body>\n<p>Exmo. (a) Senhor(a) {nomeRequerente},</p>\n\n<p>Informamos que na data {dataRealizacao} deu entrada no Balcão do Empreendedor o pedido abaixo identificado, relativo ao processo n.º {numeroProcesso}.</p>\n<p>O valor associado ao pedido será determinado pela respetiva entidade competente, num prazo de cinco dias, e a guia de pagamento será comunicada por correio eletrónico para o contacto: {emailRequerente}.</p>\n<p>Uma vez recebida a guia de pagamento pode dar continuidade ao pedido efetuando o seu pagamento.<br>\nO pedido só será submetido à entidade competente após confirmação do pagamento.</p>\n\n<h3>Dados do processo</h3>\n<table>\n    <tr>\n        <td><strong>Nº processo:</strong></td>\n        <td>{numeroProcesso}</td>\n    </tr>\n    <tr>\n        <td><strong>Entidade competente:</strong></td>\n        <td>{entidadeCompetente}</td>\n    </tr>\n    <tr>\n        <td><strong>Data da realização:</strong></td>\n        <td>{dataRealizacao}</td>\n    </tr>\n    <tr>\n        <td><strong>Morada:</strong></td>\n        <td>{morada}</td>\n    </tr>\n</table>\n\n<h3>Dados do(s) pedido(s)</h3>\n<table>\n    <tr>\n        <td><strong>N.º pedido</strong></td>\n        <td><strong>Nome do serviço</strong></td>\n        <td><strong>Tipo de comunicação</strong></td>\n    </tr>\n    <tr>\n        <td>{numeroPedido}</td>\n        <td>{nomeServico}</td>\n        <td>{tipoComunicacao}</td>\n    </tr>\n</table>\n\n<h3>Dados do requerente</h3>\n<table>\n    <tr>\n        <td><strong>Nome:</strong></td>\n        <td>{nomeRequerente}</td>\n    </tr>\n    <tr>\n        <td><strong>Correio eletrónico:</strong></td>\n        <td>{emailRequerente}</td>\n    </tr>\n    <tr>\n        <td><strong>Telemóvel:</strong></td>\n        <td>{telemovel}</td>\n    </tr>\n    <tr>\n        <td><strong>Telefone:</strong></td>\n        <td>{telefone}</td>\n    </tr>\n</table>\n\n<h3>Dados do titular</h3>\n<table>\n    <tr>\n        <td><strong>NIPC/NIF:</strong></td>\n        <td>{nifTitular}</td>\n    </tr>\n    <tr>\n        <td><strong>Nome:</strong></td>\n        <td>{nomeTitular}</td>\n    </tr>\n</table>\n\n<p><strong>gov.pt</strong><br>\nProcessado por computador</p>\n\n<p>Contactos - Centro de Contacto da Empresa<br>\nTelefone: {telefoneEmpresa}<br>\nTelefone para contactos internacionais: {telefoneInternacional} (dias úteis, das {horarioAtendimento})<br>\nCorreio eletrónico: {emailEmpresa}</p>\n</body>\n</html>
+
+
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Notificação - Processo {numeroProcesso}</title>
+</head>
+<body>
+<p>Exmo. (a) Senhor(a) {nomeRequerente},</p>
+
+<p>Informamos que na data {dataRealizacao} deu entrada no Balcão do Empreendedor o pedido abaixo identificado, relativo ao processo n.º {numeroProcesso}.</p>
+<p>O valor associado ao pedido será determinado pela respetiva entidade competente, num prazo de cinco dias, e a guia de pagamento será comunicada por correio eletrónico para o contacto: {emailRequerente}.</p>
+<p>Uma vez recebida a guia de pagamento pode dar continuidade ao pedido efetuando o seu pagamento.<br>
+    O pedido só será submetido à entidade competente após confirmação do pagamento.</p>
+
+<h3>Dados do processo</h3>
+<table>
+    <tr>
+        <td><strong>Nº processo:</strong></td>
+        <td>{numeroProcesso}</td>
+    </tr>
+    <tr>
+        <td><strong>Entidade competente:</strong></td>
+        <td>{entidadeCompetente}</td>
+    </tr>
+    <tr>
+        <td><strong>Data da realização:</strong></td>
+        <td>{dataRealizacao}</td>
+    </tr>
+    <tr>
+        <td><strong>Morada:</strong></td>
+        <td>{morada}</td>
+    </tr>
+</table>
+
+<h3>Dados do(s) pedido(s)</h3>
+<table>
+    <tr>
+        <td><strong>N.º pedido</strong></td>
+        <td><strong>Nome do serviço</strong></td>
+        <td><strong>Tipo de comunicação</strong></td>
+    </tr>
+    <tr>
+        <td>{numeroPedido}</td>
+        <td>{nomeServico}</td>
+        <td>{tipoComunicacao}</td>
+    </tr>
+</table>
+
+<h3>Dados do requerente</h3>
+<table>
+    <tr>
+        <td><strong>Nome:</strong></td>
+        <td>{nomeRequerente}</td>
+    </tr>
+    <tr>
+        <td><strong>Correio eletrónico:</strong></td>
+        <td>{emailRequerente}</td>
+    </tr>
+    <tr>
+        <td><strong>Telemóvel:</strong></td>
+        <td>{telemovel}</td>
+    </tr>
+    <tr>
+        <td><strong>Telefone:</strong></td>
+        <td>{telefone}</td>
+    </tr>
+</table>
+
+<h3>Dados do titular</h3>
+<table>
+    <tr>
+        <td><strong>NIPC/NIF:</strong></td>
+        <td>{nifTitular}</td>
+    </tr>
+    <tr>
+        <td><strong>Nome:</strong></td>
+        <td>{nomeTitular}</td>
+    </tr>
+</table>
+
+<p><strong>gov.pt</strong><br>
+    Processado por computador</p>
+
+<p>Contactos - Centro de Contacto da Empresa<br>
+    Telefone: {telefoneEmpresa}<br>
+    Telefone para contactos internacionais: {telefoneInternacional} (dias úteis, das {horarioAtendimento})<br>
+    Correio eletrónico: {emailEmpresa}</p>
+</body>
+</html>

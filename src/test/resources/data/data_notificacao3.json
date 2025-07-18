@@ -1,0 +1,27 @@
+{
+  "templateName": "notificacao2",
+  "data": {
+    "nomeRequerente": "teste fevereiro",
+    "dataRealizacao": "10-02-2025 09:51",
+    "numeroProcesso": "986",
+    "entidadeCompetente": "Câmara Municipal de Lagos",
+    "morada": "",
+    "numeroPedido": "211/2025",
+    "nomeServico": "Ocupação de espaço público - Esplanada aberta",
+    "tipoComunicacao": "Autorização",
+    "emailRequerente": "teste@teste.pt",
+    "telemovel": "--",
+    "telefone": "--",
+    "nifTitular": "123456789",
+    "nomeTitular": "teste fevereiro",
+    "telefoneEmpresa": "300 003 980",
+    "telefoneInternacional": "00351 28 910 65 40",
+    "horarioAtendimento": "09:00h às 17:00h",
+    "emailEmpresa": "info.empresa@ama.pt"
+  },
+  "options": {
+    "filename": "notificacao_3.pdf",
+    "orientation": "portrait",
+    "pageSize": "A4"
+  }
+}

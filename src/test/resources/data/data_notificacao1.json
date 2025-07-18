@@ -1,0 +1,23 @@
+{
+    "templateName": "notificacao1",
+    "data": {
+        "destinatario": "nuno teste ama",
+        "nomeRequerente": "nuno teste ama",
+        "emailRequerente": "nuno.v.fernandes@t.pt",
+        "numeroPedido": "367/2025",
+        "nomeServico": "Pedir Cheque Nutricionista",
+        "numeroProcesso": "1407",
+        "dataSubmissao": "25-03-2025",
+        "horaSubmissao": "23:59",
+        "numeroIdentificacaoFiscal": "248337840",
+        "telemovel": "--",
+        "telefone1": "210 489 010",
+        "telefone2": "300 003 990",
+        "horarioAtendimento": "9h às 18h"
+    },
+    "options": {
+        "filename": "notificacao_1.pdf",
+        "orientation": "portrait",
+        "pageSize": "A4"
+    }
+}
