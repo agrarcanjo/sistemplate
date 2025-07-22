@@ -1,5 +1,10 @@
 package pt.ama.resource.jsonapi;
 
+import lombok.Getter;
+import lombok.Setter;
+
+@Setter
+@Getter
 public class ApiVersionModel {
 
     private String version;
@@ -10,14 +15,6 @@ public class ApiVersionModel {
 
     public ApiVersionModel(String version) {
         this.version = version;
-    }
-
-    public void setVersion(String version) {
-        this.version = version;
-    }
-
-    public String getVersion() {
-        return version;
     }
 
 }

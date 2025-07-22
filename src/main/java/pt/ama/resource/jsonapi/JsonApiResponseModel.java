@@ -1,7 +1,10 @@
 package pt.ama.resource.jsonapi;
 
+import lombok.Getter;
+
 import java.util.List;
 
+@Getter
 public class JsonApiResponseModel<T> {
 
     private List<JsonApiErrorModel> errors;
@@ -30,18 +33,6 @@ public class JsonApiResponseModel<T> {
 
     public static <T> JsonApiResponseModel<T> error(List<JsonApiErrorModel> errors, String version) {
         return new JsonApiResponseModel<>(errors, version);
-    }
-
-    public List<JsonApiErrorModel> getErrors() {
-        return errors;
-    }
-
-    public T getData() {
-        return data;
-    }
-
-    public ApiVersionModel getJsonapi() {
-        return jsonapi;
     }
 
 }

@@ -13,6 +13,9 @@ import pt.ama.mapper.TemplateMapper;
 import pt.ama.model.Template;
 import pt.ama.resource.JsonApiResource;
 import pt.ama.service.TemplateService;
+import pt.ama.service.security.AuthService;
+
+import java.util.List;
 
 
 @Path("/api/templates")
@@ -26,6 +29,9 @@ public class TemplateResource extends JsonApiResource {
 
     @Inject
     TemplateMapper templateMapper;
+
+    @Inject
+    AuthService authService;
 
 //    @GET
 //    @Operation(summary = "Lista todos os templates")

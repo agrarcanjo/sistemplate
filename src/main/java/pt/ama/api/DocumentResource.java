@@ -7,6 +7,7 @@ import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 import pt.ama.dto.DocumentRequest;
 import pt.ama.dto.DocumentResponse;
+import pt.ama.resource.JsonApiResource;
 import pt.ama.service.DocumentService;
 import org.jboss.logging.Logger;
 
@@ -17,7 +18,7 @@ import java.util.Base64;
 @Path("/documents")
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)
-public class DocumentResource {
+public class DocumentResource extends JsonApiResource {
 
     private static final Logger LOG = Logger.getLogger(DocumentResource.class);
 
@@ -96,10 +97,8 @@ public class DocumentResource {
                 filename += ".pdf";
             }
 
-            // Codificar o documento em base64
             String base64Content = Base64.getEncoder().encodeToString(document);
-            
-            // Criar a resposta com as informações do documento
+
             DocumentResponse response = new DocumentResponse(
                 filename,
                 "application/pdf",

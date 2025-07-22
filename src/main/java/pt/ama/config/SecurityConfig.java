@@ -1,30 +1,40 @@
 package pt.ama.config;
 
-// import io.quarkus.arc.profile.UnlessBuildProfile;
-// import jakarta.enterprise.context.ApplicationScoped;
-// import org.eclipse.microprofile.config.inject.ConfigProperty;
-// import org.eclipse.microprofile.health.HealthCheck;
-// import org.eclipse.microprofile.health.HealthCheckResponse;
-// import org.eclipse.microprofile.health.Liveness;
+import jakarta.enterprise.context.Dependent;
+import jakarta.enterprise.inject.Produces;
+import org.eclipse.microprofile.config.inject.ConfigProperty;
+import pt.ama.util.ResourceLoader;
 
-// @ApplicationScoped
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStream;
+import java.security.KeyStore;
+import java.security.KeyStoreException;
+import java.security.NoSuchAlgorithmException;
+import java.security.cert.CertificateException;
+
+@Dependent
 public class SecurityConfig {
 
-    // Placeholder for security configurations (e.g., JWT, OAuth2)
-    // Quarkus provides extensions for these, like quarkus-smallrye-jwt
+    private static final String TYPE_PKCS_12 = "PKCS12";
 
-    // Example: If using JWT
-    // @ConfigProperty(name = "mp.jwt.verify.publickey.location")
-    // String publicKeyLocation;
+    @ConfigProperty(name = "application.security.keystore.path")
+    String keystorePath;
 
-    // @ConfigProperty(name = "mp.jwt.verify.issuer")
-    // String issuer;
+    @ConfigProperty(name = "application.security.keystore.password")
+    String keystorePassword;
 
-    // public String getPublicKeyLocation() {
-    //     return publicKeyLocation;
-    // }
+    @Produces
+    public KeyStore keyStore() throws KeyStoreException, IOException, CertificateException, NoSuchAlgorithmException {
+        try (InputStream ks = ResourceLoader.load(keystorePath)) {
+            if (ks == null) {
+                throw new FileNotFoundException("Keystore not found in path " + keystorePath);
+            }
+            KeyStore keyStore = KeyStore.getInstance(TYPE_PKCS_12);
+            keyStore.load(ks, keystorePassword != null ? keystorePassword.toCharArray() : null);
 
-    // public String getIssuer() {
-    //     return issuer;
-    // }
+            return keyStore;
+        }
+    }
+
 }

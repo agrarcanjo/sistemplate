@@ -8,7 +8,7 @@ public abstract class JsonApiResource {
     @ConfigProperty(name = "quarkus.application.version")
     String version;
 
-    protected <T> pt.ama.resource.jsonapi.JsonApiResponseModel<T> ok(T data) {
+    protected <T> JsonApiResponseModel<T> ok(T data) {
         return new JsonApiResponseModel<>(data, version);
     }
 
