@@ -7,7 +7,7 @@ import org.eclipse.microprofile.config.inject.ConfigProperty;
 import org.jboss.logging.Logger;
 import org.jboss.resteasy.reactive.RestResponse;
 import org.jboss.resteasy.reactive.server.ServerExceptionMapper;
-import pt.ama.exception.CallbackIdNotFoundException;
+import pt.ama.exception.*;
 import pt.ama.resource.jsonapi.JsonApiErrorModel;
 import pt.ama.resource.jsonapi.JsonApiResponseModel;
 
@@ -29,6 +29,31 @@ public class ExceptionMapper {
     @ServerExceptionMapper
     public RestResponse<JsonApiResponseModel<Void>> mapCallbackIdNotFoundException(CallbackIdNotFoundException e) {
         return mapException(e, Response.Status.NOT_FOUND);
+    }
+
+    @ServerExceptionMapper
+    public RestResponse<JsonApiResponseModel<Void>> mapTemplateNotFoundException(TemplateNotFoundException e) {
+        return mapException(e, Response.Status.NOT_FOUND);
+    }
+
+    @ServerExceptionMapper
+    public RestResponse<JsonApiResponseModel<Void>> mapRequiredFieldsValidationException(RequiredFieldsValidationException e) {
+        return mapException(e, Response.Status.BAD_REQUEST);
+    }
+
+    @ServerExceptionMapper
+    public RestResponse<JsonApiResponseModel<Void>> mapUnsupportedDocumentTypeException(UnsupportedDocumentTypeException e) {
+        return mapException(e, Response.Status.BAD_REQUEST);
+    }
+
+    @ServerExceptionMapper
+    public RestResponse<JsonApiResponseModel<Void>> mapDocumentGenerationException(DocumentGenerationException e) {
+        return mapException(e, Response.Status.INTERNAL_SERVER_ERROR);
+    }
+
+    @ServerExceptionMapper
+    public RestResponse<JsonApiResponseModel<Void>> mapDataConversionException(DataConversionException e) {
+        return mapException(e, Response.Status.BAD_REQUEST);
     }
 
     @ServerExceptionMapper

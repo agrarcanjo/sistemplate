@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import pt.ama.dto.DocumentRequest;
+import pt.ama.exception.*;
 import pt.ama.model.Template;
 import pt.ama.service.validation.RequiredFieldsValidator;
 import io.quarkus.qute.Engine;
@@ -44,13 +45,17 @@ public class DocumentService {
         Template template = templateService.findByName(request.getTemplateName());
         if (template == null) {
             LOG.errorf("DocumentService: Template não encontrado: '%s'", request.getTemplateName());
-            throw new RuntimeException("Template not found: " + request.getTemplateName());
+            throw new TemplateNotFoundException(request.getTemplateName());
         }
         
         LOG.infof("DocumentService: Template encontrado: '%s', tipo: %s, ativo: %s", 
                  template.getName(), template.getType(), template.isActive());
 
-        String processedContent;
+        String processedContent = processTemplate(template, request);
+        return generateDocumentByType(template, processedContent, request);
+    }
+
+    private String processTemplate(Template template, DocumentRequest request) {
         try {
             LOG.infof("DocumentService: Processando template com Qute engine");
 
@@ -59,16 +64,21 @@ public class DocumentService {
 
             requiredFieldsValidator.validateRequiredFields(template, dataMap);
             
-            processedContent = engine.parse(template.getContent())
+            String processedContent = engine.parse(template.getContent())
                     .data(dataMap)
                     .render();
             LOG.infof("DocumentService: Template processado com sucesso, tamanho do conteúdo: %d caracteres", 
                      processedContent.length());
+            return processedContent;
+        } catch (RequiredFieldsValidationException e) {
+            throw e;
         } catch (Exception e) {
             LOG.errorf("DocumentService: Erro ao processar template: %s", e.getMessage(), e);
-            throw new RuntimeException("Erro ao processar template: " + e.getMessage(), e);
+            throw new TemplateProcessingException(template.getName(), e.getMessage(), e);
         }
+    }
 
+    private byte[] generateDocumentByType(Template template, String processedContent, DocumentRequest request) {
         try {
             byte[] result;
             switch (template.getType()) {
@@ -100,11 +110,11 @@ public class DocumentService {
                     
                 default:
                     LOG.errorf("DocumentService: Tipo de documento não suportado: %s", template.getType());
-                    throw new RuntimeException("Tipo de documento não suportado: " + template.getType());
+                    throw new UnsupportedDocumentTypeException(template.getType());
             }
         } catch (Exception e) {
             LOG.errorf("DocumentService: Erro ao gerar documento: %s", e.getMessage());
-            throw new RuntimeException("Erro ao gerar documento: " + e.getMessage(), e);
+            throw new DocumentGenerationException(template.getName(), template.getType().toString(), e.getMessage(), e);
         }
     }
 
@@ -117,7 +127,7 @@ public class DocumentService {
             return result;
         } catch (Exception e) {
             LOG.errorf("DocumentService: Erro ao converter JsonNode para Map: %s", e.getMessage());
-            throw new RuntimeException("Erro ao converter dados: " + e.getMessage(), e);
+            throw new DataConversionException(e.getMessage(), e);
         }
     }
 }

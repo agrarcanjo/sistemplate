@@ -3,6 +3,7 @@ package pt.ama.service;
 import com.fasterxml.jackson.databind.JsonNode;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
+import pt.ama.exception.TemplateNotFoundException;
 import pt.ama.model.Template;
 import pt.ama.dto.DocumentRequest;
 import pt.ama.repository.TemplateRepository;
@@ -87,7 +88,7 @@ public class TemplateService {
         LOG.infof("TemplateService: Gerando PDF para template: '%s'", templateName);
         Template template = findByName(templateName);
         if (template == null) {
-            throw new RuntimeException("Template not found: " + templateName);
+            throw new TemplateNotFoundException(templateName);
         }
         return pdfGenerator.generatePdf(template.getContent(), data, options);
     }

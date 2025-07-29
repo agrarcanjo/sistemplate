@@ -6,7 +6,6 @@ workspace "SGT Infrastructure" {
 
             k8singress -> aksclusternode "Route incomming cluster traffic"
 
-            frontend = container "SGT_frontend" "" "" "Kubernetes - pod"
             backoffice = container "SGT_backend" "" "" "Kubernetes - pod"
             database = container "SGT_database" "" "" "Kubernetes - pod"
         }
@@ -25,9 +24,6 @@ workspace "SGT Infrastructure" {
                 deploymentNode "AKS Cluster DEV" "" "" "Kubernetes - node" {
                     aksclusternodedev = containerInstance aksclusternode
                     deploymentNode "dev-sgt Namespace" "" "" "Kubernetes - ns" {
-                        containerInstance frontend "" "largetext" {
-                            description "sgt.dev.ic.ama.lan"
-                        }
                         containerInstance backoffice "" "largetext" {
                             description "be-sgt.dev.ic.ama.lan"
                         }
@@ -59,9 +55,6 @@ workspace "SGT Infrastructure" {
                 deploymentNode "AKS Cluster TST" "" "" "Kubernetes - node" {
                     aksclusternodetst = containerInstance aksclusternode
                     deploymentNode "tst-sgt Namespace" "" "" "Kubernetes - ns" {
-                        containerInstance frontend "" "largetext" {
-                            description "sgt.tst.ic.ama.lan"
-                        }
                         containerInstance backoffice "" "largetext" {
                             description "be-sgt.tst.ic.ama.lan"
                         }
@@ -93,9 +86,6 @@ workspace "SGT Infrastructure" {
                 deploymentNode "AKS Cluster PPR" "" "" "Kubernetes - node" {
                     aksclusternodeppr = containerInstance aksclusternode
                     deploymentNode "ppr-sgt Namespace" "" "" "Kubernetes - ns" {
-                        containerInstance frontend "" "largetext" {
-                            description "sgt.ppr.ic.ama.lan"
-                        }
                         containerInstance backoffice "" "largetext" {
                             description "be-sgt.ppr.ic.ama.lan"
                         }
@@ -127,9 +117,6 @@ workspace "SGT Infrastructure" {
                 deploymentNode "AKS Cluster PRD" "" "" "Kubernetes - node" {
                     aksclusternodeprd = containerInstance aksclusternode
                     deploymentNode "pdr-sgt Namespace" "" "" "Kubernetes - ns" {
-                        containerInstance frontend "" "largetext" {
-                            description "sgt.pdr.ic.ama.lan"
-                        }
                         containerInstance backoffice "" "largetext" {
                             description "be-sgt.pdr.ic.ama.lan"
                         }

@@ -26,7 +26,6 @@ class RequiredFieldsValidatorTest {
 
     @Test
     void shouldPassValidationWhenAllRequiredFieldsArePresent() {
-        // Given
         Template.TemplateMetadata metadata = new Template.TemplateMetadata();
         metadata.setRequiredFields(Arrays.asList("name", "email", "age"));
         template.setMetadata(metadata);
@@ -37,22 +36,17 @@ class RequiredFieldsValidatorTest {
         dataMap.put("age", 30);
         dataMap.put("optional", "valor opcional");
 
-        // When & Then
         assertDoesNotThrow(() -> validator.validateRequiredFields(template, dataMap));
     }
 
     @Test
     void shouldThrowExceptionWhenRequiredFieldsAreMissing() {
-        // Given
         Template.TemplateMetadata metadata = new Template.TemplateMetadata();
         metadata.setRequiredFields(Arrays.asList("name", "email", "age"));
         template.setMetadata(metadata);
 
         Map<String, Object> dataMap = new HashMap<>();
         dataMap.put("name", "João Silva");
-        // email e age estão ausentes
-
-        // When & Then
         RequiredFieldsValidationException exception = assertThrows(
             RequiredFieldsValidationException.class,
             () -> validator.validateRequiredFields(template, dataMap)
@@ -93,7 +87,6 @@ class RequiredFieldsValidatorTest {
 
     @Test
     void shouldHandleNestedFieldsCorrectly() {
-        // Given
         Template.TemplateMetadata metadata = new Template.TemplateMetadata();
         metadata.setRequiredFields(Arrays.asList("user.name", "user.address.city"));
         template.setMetadata(metadata);
@@ -109,25 +102,22 @@ class RequiredFieldsValidatorTest {
         Map<String, Object> dataMap = new HashMap<>();
         dataMap.put("user", user);
 
-        // When & Then
         assertDoesNotThrow(() -> validator.validateRequiredFields(template, dataMap));
     }
 
     @Test
     void shouldThrowExceptionForMissingNestedFields() {
-        // Given
+
         Template.TemplateMetadata metadata = new Template.TemplateMetadata();
         metadata.setRequiredFields(Arrays.asList("user.name", "user.address.city"));
         template.setMetadata(metadata);
 
         Map<String, Object> user = new HashMap<>();
         user.put("name", "João Silva");
-        // address está ausente
 
         Map<String, Object> dataMap = new HashMap<>();
         dataMap.put("user", user);
 
-        // When & Then
         RequiredFieldsValidationException exception = assertThrows(
             RequiredFieldsValidationException.class,
             () -> validator.validateRequiredFields(template, dataMap)
@@ -138,16 +128,14 @@ class RequiredFieldsValidatorTest {
 
     @Test
     void shouldTreatNullValuesAsMissingFields() {
-        // Given
         Template.TemplateMetadata metadata = new Template.TemplateMetadata();
         metadata.setRequiredFields(Arrays.asList("name", "email"));
         template.setMetadata(metadata);
 
         Map<String, Object> dataMap = new HashMap<>();
         dataMap.put("name", "João Silva");
-        dataMap.put("email", null); // valor null
+        dataMap.put("email", null);
 
-        // When & Then
         RequiredFieldsValidationException exception = assertThrows(
             RequiredFieldsValidationException.class,
             () -> validator.validateRequiredFields(template, dataMap)
