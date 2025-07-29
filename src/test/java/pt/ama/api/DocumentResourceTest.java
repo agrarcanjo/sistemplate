@@ -1,5 +1,6 @@
 package pt.ama.api;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.quarkus.test.junit.QuarkusTest;
@@ -25,14 +26,12 @@ import static org.hamcrest.Matchers.containsString;
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 public class DocumentResourceTest {
 
-    private ObjectMapper objectMapper = new ObjectMapper();
+    private final ObjectMapper objectMapper = new ObjectMapper();
 
     @BeforeEach
     public void setupTemplates() {
-        // Limpar templates existentes e criar novos para cada teste
         cleanupTemplates();
-        
-        // Criar template simples para testes
+
         TemplateRequest simpleTemplate = new TemplateRequest();
         simpleTemplate.setName("simple-document");
         simpleTemplate.setType(DocumentType.PDF);
@@ -47,7 +46,6 @@ public class DocumentResourceTest {
                 .then()
                 .statusCode(201);
 
-        // Criar template complexo para testes avançados
         TemplateRequest complexTemplate = new TemplateRequest();
         complexTemplate.setName("complex-document");
         complexTemplate.setType(DocumentType.PDF);
@@ -62,7 +60,6 @@ public class DocumentResourceTest {
                 .then()
                 .statusCode(201);
 
-        // Criar template para relatório executivo
         TemplateRequest executiveTemplate = new TemplateRequest();
         executiveTemplate.setName("executive-report");
         executiveTemplate.setType(DocumentType.PDF);
@@ -79,7 +76,6 @@ public class DocumentResourceTest {
     }
 
     private void cleanupTemplates() {
-        // Tentar deletar templates que podem existir de testes anteriores
         String[] templateNames = {"simple-document", "complex-document", "executive-report"};
         for (String name : templateNames) {
             given()
@@ -91,7 +87,7 @@ public class DocumentResourceTest {
     }
 
     @Test
-    public void testGenerateSimpleDocument() throws Exception {
+    public void testGenerateSimpleDocument() {
         DocumentRequest request = new DocumentRequest();
         request.setTemplateName("simple-document");
         
@@ -112,7 +108,7 @@ public class DocumentResourceTest {
     }
 
     @Test
-    public void testGenerateComplexDocument() throws Exception {
+    public void testGenerateComplexDocument() {
         DocumentRequest request = new DocumentRequest();
         request.setTemplateName("complex-document");
         
@@ -133,7 +129,7 @@ public class DocumentResourceTest {
     }
 
     @Test
-    public void testGenerateDocumentWithConditionals() throws Exception {
+    public void testGenerateDocumentWithConditionals() {
         DocumentRequest request = new DocumentRequest();
         request.setTemplateName("complex-document");
         
@@ -154,11 +150,10 @@ public class DocumentResourceTest {
     }
 
     @Test
-    public void testGenerateExecutiveReport() throws Exception {
+    public void testGenerateExecutiveReport() throws JsonProcessingException {
         DocumentRequest request = new DocumentRequest();
         request.setTemplateName("executive-report");
-        
-        // Usar dados do arquivo de exemplo
+
         String jsonContent = TemplateTestUtils.loadTemplateFromFile("../data/executive-report-sample.json");
         JsonNode jsonData = objectMapper.readTree(jsonContent);
         request.setData(jsonData);
@@ -176,7 +171,7 @@ public class DocumentResourceTest {
     }
 
     @Test
-    public void testGenerateDocumentWithPdfOptions() throws Exception {
+    public void testGenerateDocumentWithPdfOptions() {
         DocumentRequest request = new DocumentRequest();
         request.setTemplateName("simple-document");
         
@@ -184,7 +179,6 @@ public class DocumentResourceTest {
         JsonNode jsonData = objectMapper.valueToTree(data);
         request.setData(jsonData);
 
-        // Configurar opções do PDF
         DocumentRequest.PdfOptions options = new DocumentRequest.PdfOptions();
         options.setFilename("custom-filename.pdf");
         options.setOrientation("landscape");
@@ -207,7 +201,7 @@ public class DocumentResourceTest {
     }
 
     @Test
-    public void testGenerateDocumentWithNonExistentTemplate() throws Exception {
+    public void testGenerateDocumentWithNonExistentTemplate() {
         DocumentRequest request = new DocumentRequest();
         request.setTemplateName("non-existent-template");
         
@@ -226,7 +220,7 @@ public class DocumentResourceTest {
     }
 
     @Test
-    public void testGenerateDocumentWithEmptyData() throws Exception {
+    public void testGenerateDocumentWithEmptyData() {
         DocumentRequest request = new DocumentRequest();
         request.setTemplateName("simple-document");
         
@@ -244,11 +238,10 @@ public class DocumentResourceTest {
     }
 
     @Test
-    public void testGenerateDocumentWithPartialData() throws Exception {
+    public void testGenerateDocumentWithPartialData() {
         DocumentRequest request = new DocumentRequest();
         request.setTemplateName("complex-document");
-        
-        // Criar dados parciais para testar condicionais
+
         Map<String, Object> partialData = Map.of(
             "header", "Documento Parcial",
             "content", "Este documento tem apenas dados básicos.",
@@ -270,7 +263,7 @@ public class DocumentResourceTest {
     }
 
     @Test
-    public void testGenerateDocumentWithSpecialCharacters() throws Exception {
+    public void testGenerateDocumentWithSpecialCharacters() {
         DocumentRequest request = new DocumentRequest();
         request.setTemplateName("simple-document");
         
@@ -296,7 +289,6 @@ public class DocumentResourceTest {
 
     @Test
     public void testGenerateDocumentWithInvalidRequest() {
-        // Teste com template name vazio
         DocumentRequest request = new DocumentRequest();
         request.setTemplateName("");
         
@@ -341,14 +333,12 @@ public class DocumentResourceTest {
     }
 
     @Test
-    public void testGenerateDocumentWithLargeData() throws Exception {
+    public void testGenerateDocumentWithLargeData() {
         DocumentRequest request = new DocumentRequest();
         request.setTemplateName("complex-document");
-        
-        // Criar dados grandes para testar performance
+
         Map<String, Object> largeData = TemplateTestUtils.createComplexTemplateData();
-        
-        // Adicionar muitos itens para testar com dados grandes
+
         java.util.List<String> manyItems = new java.util.ArrayList<>();
         for (int i = 0; i < 1000; i++) {
             manyItems.add("Item " + i);
@@ -369,11 +359,10 @@ public class DocumentResourceTest {
     }
 
     @Test
-    public void testGenerateDocumentWithNestedObjects() throws Exception {
+    public void testGenerateDocumentWithNestedObjects() {
         DocumentRequest request = new DocumentRequest();
         request.setTemplateName("complex-document");
-        
-        // Criar estrutura de dados aninhada complexa
+
         Map<String, Object> nestedData = Map.of(
             "company", Map.of(
                 "name", "Empresa Teste",

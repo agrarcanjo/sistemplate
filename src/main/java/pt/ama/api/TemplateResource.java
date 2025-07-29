@@ -13,7 +13,6 @@ import pt.ama.mapper.TemplateMapper;
 import pt.ama.model.Template;
 import pt.ama.resource.JsonApiResource;
 import pt.ama.service.TemplateService;
-import pt.ama.service.security.AuthService;
 
 import java.util.List;
 
@@ -30,15 +29,15 @@ public class TemplateResource extends JsonApiResource {
     @Inject
     TemplateMapper templateMapper;
 
-    @Inject
-    AuthService authService;
+//    @Inject
+//    AuthService authService;
 
-//    @GET
-//    @Operation(summary = "Lista todos os templates")
-//    public Response getAllTemplates() {
-//        List<Template> templates = templateService.findAll();
-//        return Response.ok(templateMapper.toResponseList(templates)).build();
-//    }
+    @GET
+    @Operation(summary = "Lista todos os templates")
+    public Response getAllTemplates() {
+        List<Template> templates = templateService.findAll();
+        return Response.ok(templateMapper.toResponseList(templates)).build();
+    }
 //
 //    @GET
 //    @Path("/{name}/versions")

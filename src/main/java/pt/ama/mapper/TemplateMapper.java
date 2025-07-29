@@ -34,14 +34,6 @@ public class TemplateMapper {
             metadata.setSampleData(request.getMetadata().getSampleData());
             metadata.setDocumentation(request.getMetadata().getDocumentation());
 
-            if (request.getMetadata().getImageReferences() != null) {
-                List<Template.ImageReference> imageRefs = request.getMetadata().getImageReferences()
-                    .stream()
-                    .map(this::mapImageReference)
-                    .collect(Collectors.toList());
-                metadata.setImageReferences(imageRefs);
-            }
-
             template.setMetadata(metadata);
         }
 
@@ -75,14 +67,6 @@ public class TemplateMapper {
             metadata.setSampleData(template.getMetadata().getSampleData());
             metadata.setDocumentation(template.getMetadata().getDocumentation());
 
-            if (template.getMetadata().getImageReferences() != null) {
-                List<TemplateResponse.ImageReferenceResponse> imageRefs = template.getMetadata().getImageReferences()
-                    .stream()
-                    .map(this::mapImageReferenceResponse)
-                    .collect(Collectors.toList());
-                metadata.setImageReferences(imageRefs);
-            }
-
             response.setMetadata(metadata);
         }
 
@@ -96,57 +80,5 @@ public class TemplateMapper {
         return templates.stream()
                 .map(this::toResponse)
                 .collect(Collectors.toList());
-    }
-
-    public void updateEntity(Template template, TemplateRequest request) {
-        if (template == null || request == null) {
-            return;
-        }
-
-        template.setName(request.getName());
-        template.setType(request.getType());
-        template.setContent(request.getContent());
-        template.setDescription(request.getDescription());
-        template.setAuthor(request.getAuthor());
-        template.setOwner(request.getOwner());
-        template.setManager(request.getManager());
-        template.setCategory(request.getCategory());
-        template.setTags(request.getTags());
-
-        if (request.getMetadata() != null) {
-            Template.TemplateMetadata metadata = new Template.TemplateMetadata();
-            metadata.setRequiredFields(request.getMetadata().getRequiredFields());
-            metadata.setOptionalFields(request.getMetadata().getOptionalFields());
-            metadata.setSampleData(request.getMetadata().getSampleData());
-            metadata.setDocumentation(request.getMetadata().getDocumentation());
-
-            if (request.getMetadata().getImageReferences() != null) {
-                List<Template.ImageReference> imageRefs = request.getMetadata().getImageReferences()
-                    .stream()
-                    .map(this::mapImageReference)
-                    .collect(Collectors.toList());
-                metadata.setImageReferences(imageRefs);
-            }
-
-            template.setMetadata(metadata);
-        }
-    }
-    
-    private Template.ImageReference mapImageReference(TemplateRequest.ImageReferenceRequest request) {
-        Template.ImageReference imageRef = new Template.ImageReference();
-        imageRef.setPlaceholder(request.getPlaceholder());
-        imageRef.setDescription(request.getDescription());
-        imageRef.setRecommendedSize(request.getRecommendedSize());
-        imageRef.setRequired(request.isRequired());
-        return imageRef;
-    }
-
-    private TemplateResponse.ImageReferenceResponse mapImageReferenceResponse(Template.ImageReference imageRef) {
-        TemplateResponse.ImageReferenceResponse response = new TemplateResponse.ImageReferenceResponse();
-        response.setPlaceholder(imageRef.getPlaceholder());
-        response.setDescription(imageRef.getDescription());
-        response.setRecommendedSize(imageRef.getRecommendedSize());
-        response.setRequired(imageRef.isRequired());
-        return response;
     }
 }

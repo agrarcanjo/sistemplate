@@ -6,6 +6,7 @@ import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import pt.ama.dto.DocumentRequest;
 import pt.ama.model.Template;
+import pt.ama.service.validation.RequiredFieldsValidator;
 import io.quarkus.qute.Engine;
 import org.jboss.logging.Logger;
 
@@ -33,6 +34,9 @@ public class DocumentService {
 
     @Inject
     ObjectMapper objectMapper;
+    
+    @Inject
+    RequiredFieldsValidator requiredFieldsValidator;
 
     public byte[] generateDocument(DocumentRequest request) {
         LOG.infof("DocumentService: Iniciando geração de documento para template: '%s'", request.getTemplateName());
@@ -52,6 +56,8 @@ public class DocumentService {
 
             Map<String, Object> dataMap = convertJsonNodeToMap(request.getData());
             LOG.infof("DocumentService: Dados convertidos para Map com %d chaves", dataMap.size());
+
+            requiredFieldsValidator.validateRequiredFields(template, dataMap);
             
             processedContent = engine.parse(template.getContent())
                     .data(dataMap)

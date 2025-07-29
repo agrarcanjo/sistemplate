@@ -24,16 +24,14 @@ public class TemplateTestUtils {
      */
     public static Map<String, Object> createComplexTemplateData() {
         Map<String, Object> data = new HashMap<>();
-        
-        // Dados básicos
+
         data.put("title", "Relatório de Vendas - Janeiro 2024");
         data.put("subtitle", "Análise Mensal de Performance");
         data.put("header", "EMPRESA XYZ LTDA");
         data.put("date", "2024-01-31");
         data.put("documentNumber", "REL-2024-001");
         data.put("version", "1.0");
-        
-        // Informações da empresa
+
         Map<String, Object> company = new HashMap<>();
         company.put("name", "Empresa XYZ Ltda");
         company.put("address", "Rua das Flores, 123 - São Paulo/SP");
@@ -45,19 +43,16 @@ public class TemplateTestUtils {
         company.put("contact", contact);
         
         data.put("company", company);
-        
-        // Destinatário
+
         Map<String, String> recipient = new HashMap<>();
         recipient.put("name", "João Silva");
         recipient.put("company", "Cliente ABC");
         recipient.put("email", "joao@clienteabc.com");
         data.put("recipient", recipient);
-        
-        // Conteúdo principal
+
         data.put("greeting", "Prezado(a)");
         data.put("content", "<p>Este relatório apresenta os resultados obtidos durante o mês de janeiro de 2024.</p>");
-        
-        // Seções dinâmicas
+
         List<Map<String, Object>> sections = new ArrayList<>();
         
         Map<String, Object> section1 = new HashMap<>();
@@ -81,8 +76,7 @@ public class TemplateTestUtils {
         sections.add(section1);
         
         data.put("sections", sections);
-        
-        // Dados de tabela
+
         Map<String, Object> tableData = new HashMap<>();
         tableData.put("title", "Vendas por Produto");
         tableData.put("headers", Arrays.asList("Produto", "Quantidade", "Valor Unitário", "Total"));
@@ -95,8 +89,7 @@ public class TemplateTestUtils {
         
         tableData.put("totals", Arrays.asList("Total", "225", "-", "R$ 17.000,00"));
         data.put("tableData", tableData);
-        
-        // Estatísticas
+
         List<Map<String, String>> statistics = new ArrayList<>();
         Map<String, String> stat1 = new HashMap<>();
         stat1.put("label", "Total de Vendas");
@@ -109,8 +102,7 @@ public class TemplateTestUtils {
         statistics.add(stat2);
         
         data.put("statistics", statistics);
-        
-        // Barras de progresso
+
         List<Map<String, Object>> progressBars = new ArrayList<>();
         Map<String, Object> progress1 = new HashMap<>();
         progress1.put("label", "Meta de Vendas");
@@ -123,8 +115,7 @@ public class TemplateTestUtils {
         progressBars.add(progress2);
         
         data.put("progressBars", progressBars);
-        
-        // Caixas de informação
+
         List<Map<String, String>> infoBoxes = new ArrayList<>();
         Map<String, String> box1 = new HashMap<>();
         box1.put("type", "success");
@@ -139,8 +130,7 @@ public class TemplateTestUtils {
         infoBoxes.add(box2);
         
         data.put("infoBoxes", infoBoxes);
-        
-        // Condições
+
         List<Map<String, String>> conditions = new ArrayList<>();
         Map<String, String> condition1 = new HashMap<>();
         condition1.put("type", "approved");
@@ -148,8 +138,7 @@ public class TemplateTestUtils {
         conditions.add(condition1);
         
         data.put("conditions", conditions);
-        
-        // Cálculos
+
         List<Map<String, Object>> calculations = new ArrayList<>();
         Map<String, Object> calc1 = new HashMap<>();
         calc1.put("label", "Receita Bruta");
@@ -165,17 +154,14 @@ public class TemplateTestUtils {
         calculations.add(calc2);
         
         data.put("calculations", calculations);
-        
-        // Observações
+
         data.put("observations", Arrays.asList(
             "Todos os dados foram coletados através do sistema ERP da empresa",
             "As projeções são baseadas em dados históricos e tendências de mercado"
         ));
-        
-        // Termos
+
         data.put("terms", "<p>Este documento é confidencial e destinado exclusivamente ao uso interno da empresa.</p>");
-        
-        // Assinaturas
+
         List<Map<String, String>> signatures = new ArrayList<>();
         Map<String, String> sig1 = new HashMap<>();
         sig1.put("name", "Maria Santos");
@@ -190,8 +176,7 @@ public class TemplateTestUtils {
         signatures.add(sig2);
         
         data.put("signatures", signatures);
-        
-        // Rodapé
+
         data.put("footerText", "Documento gerado automaticamente pelo Sistema de Templates");
         data.put("confidential", true);
         

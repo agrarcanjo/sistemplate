@@ -39,18 +39,11 @@ public class Template {
 
     @Data
     public static class TemplateMetadata {
+        @NotBlank(message = "Required fields are mandatory")
         private List<String> requiredFields; // Campos obrigatórios no JSON
         private List<String> optionalFields; // Campos opcionais
-        private List<ImageReference> imageReferences; // Referências de imagens usadas
         private String sampleData; // JSON de exemplo para teste
         private String documentation; // Documentação do template
     }
 
-    @Data
-    public static class ImageReference {
-        private String placeholder; // Nome do placeholder no template (ex: {logo})
-        private String description; // Descrição da imagem
-        private String recommendedSize; // Tamanho recomendado (ex: "200x100")
-        private boolean required; // Se a imagem é obrigatória
-    }
 }

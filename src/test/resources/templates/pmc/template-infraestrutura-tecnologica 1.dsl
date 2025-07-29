@@ -1,19 +1,17 @@
-workspace "SGT Infrastructure" {
+workspace "<PRODUCT NAME> Infrastructure" {
     model {
-        ss = softwareSystem "SGT" "SGT Infrastructure" {
+        ss = softwareSystem "<PRODUCT NAME>" "<PRODUCT NAME> Infrastructure" {
             aksclusternode = container "AKS Cluster Node" "" "" "Kubernetes - node"
             k8singress = container "Kubernetes Ingress" "" "" "Kubernetes - ing"
 
             k8singress -> aksclusternode "Route incomming cluster traffic"
 
-            frontend = container "SGT_frontend" "" "" "Kubernetes - pod"
-            backoffice = container "SGT_backend" "" "" "Kubernetes - pod"
-            database = container "SGT_database" "" "" "Kubernetes - pod"
+            <PLACE_HERE_PRODUCT_CONTAINERS>
         }
         development = deploymentEnvironment "Development" {
             deploymentNode "Subscription" {
                 publicadordev = infrastructureNode "Publicador" "" "" "largetext" {
-                    description "Receives HTTPS ->\n  - be-sgt.dev.ic.ama.lan - sgt.dev.ic.ama.lan\n \nRedirects -> \n - ingress.dev.ic.ama.lan"
+                    description "Receives HTTPS ->\n <ADD_HERE_PRODUCT_URLS_FOR_DEV>\n \nRedirects ->\n - ingress.dev.ic.ama.lan"
                 }
                 tags "Microsoft Azure - Subscriptions"
             }
@@ -24,19 +22,7 @@ workspace "SGT Infrastructure" {
                 }
                 deploymentNode "AKS Cluster DEV" "" "" "Kubernetes - node" {
                     aksclusternodedev = containerInstance aksclusternode
-                    deploymentNode "dev-sgt-fe Namespace" "" "" "Kubernetes - ns" {
-                        containerInstance frontend "" "largetext" {
-                            description "sgt.dev.ic.ama.lan"
-                        }
-                        containerInstance backoffice "" "largetext" {
-                            description "be-sgt.dev.ic.ama.lan"
-                        }
-                    }
-                    deploymentNode "dev-sgt-db Namespace" "" "" "Kubernetes - ns" {
-                        containerInstance database "" "largetext" {
-                            description "db-postgresql-service.dev-sgt-db.srv.cluster.local"
-                        }
-                    }
+                    <ADD_HERE_PRODUCT_DEPLOYMENT_NODES_FOR_DEV>
                 }
                 tags "Microsoft Azure - Resource Groups"
             }
@@ -47,7 +33,7 @@ workspace "SGT Infrastructure" {
         test = deploymentEnvironment "Test" {
             deploymentNode "Subscription" {
                 publicadortst = infrastructureNode "Publicador" "" "" "largetext" {
-                    description "Receives HTTPS ->\n - be-sgt.tst.ic.ama.lan - sgt.tst.ic.ama.lan\n \nRedirects -> \n - ingress.tst.ic.ama.lan"
+                    description "Receives HTTPS ->\n <ADD_HERE_PRODUCT_URLS_FOR_TST>\n \nRedirects ->\n - ingress.tst.ic.ama.lan"
                 }
                 tags "Microsoft Azure - Subscriptions"
             }
@@ -58,19 +44,7 @@ workspace "SGT Infrastructure" {
                 }
                 deploymentNode "AKS Cluster TST" "" "" "Kubernetes - node" {
                     aksclusternodetst = containerInstance aksclusternode
-                    deploymentNode "tst-sgt-fe Namespace" "" "" "Kubernetes - ns" {
-                        containerInstance frontend "" "largetext" {
-                            description "sgt.tst.ic.ama.lan"
-                        }
-                        containerInstance backoffice "" "largetext" {
-                            description "be-sgt.tst.ic.ama.lan"
-                        }
-                    }
-                    deploymentNode "tst-sgt-db Namespace" "" "" "Kubernetes - ns" {
-                        containerInstance database "" "largetext" {
-                            description "db-postgresql-service.tst-sgt-db.srv.cluster.local"
-                        }
-                    }
+                    <ADD_HERE_PRODUCT_DEPLOYMENT_NODES_FOR_TST>
                 }
                 tags "Microsoft Azure - Resource Groups"
             }
@@ -81,7 +55,7 @@ workspace "SGT Infrastructure" {
         preproduction = deploymentEnvironment "Pre-Production" {
             deploymentNode "Subscription" {
                 publicadorppr = infrastructureNode "Publicador" "" "" "largetext" {
-                    description "Receives HTTPS ->\n - be-sgt.ppr.ic.ama.lan - sgt.ppr.ic.ama.lan\n \nRedirects -> \n - ingress.ppr.ic.ama.lan"
+                    description "Receives HTTPS ->\n <ADD_HERE_PRODUCT_URLS_FOR_PPR>\n \nRedirects ->\n - ingress.ppr.ic.ama.lan"
                 }
                 tags "Microsoft Azure - Subscriptions"
             }
@@ -92,19 +66,7 @@ workspace "SGT Infrastructure" {
                 }
                 deploymentNode "AKS Cluster PPR" "" "" "Kubernetes - node" {
                     aksclusternodeppr = containerInstance aksclusternode
-                    deploymentNode "ppr-sgt-fe Namespace" "" "" "Kubernetes - ns" {
-                        containerInstance frontend "" "largetext" {
-                            description "sgt.ppr.ic.ama.lan"
-                        }
-                        containerInstance backoffice "" "largetext" {
-                            description "be-sgt.ppr.ic.ama.lan"
-                        }
-                    }
-                    deploymentNode "ppr-sgt-db Namespace" "" "" "Kubernetes - ns" {
-                        containerInstance database "" "largetext" {
-                            description "db-postgresql-service.ppr-sgt-db.srv.cluster.local"
-                        }
-                    }
+                    <ADD_HERE_PRODUCT_DEPLOYMENT_NODES_FOR_PPR>
                 }
                 tags "Microsoft Azure - Resource Groups"
             }
@@ -115,7 +77,7 @@ workspace "SGT Infrastructure" {
         production = deploymentEnvironment "Production" {
             deploymentNode "Subscription" {
                 publicadorprd = infrastructureNode "Publicador" "" "" "largetext" {
-                    description "Receives HTTPS ->\n - be-sgt.prd.ic.ama.lan\n - sgt.prd.ic.ama.lan\n \nRedirects -> \n - ingress.prd.ic.ama.lan"
+                    description "Receives HTTPS ->\n <ADD_HERE_PRODUCT_URLS_FOR_PRD>\n \nRedirects ->\n - ingress.prd.ic.ama.lan"
                 }
                 tags "Microsoft Azure - Subscriptions"
             }
@@ -126,19 +88,7 @@ workspace "SGT Infrastructure" {
                 }
                 deploymentNode "AKS Cluster PRD" "" "" "Kubernetes - node" {
                     aksclusternodeprd = containerInstance aksclusternode
-                    deploymentNode "pdr-sgt-fe Namespace" "" "" "Kubernetes - ns" {
-                        containerInstance frontend "" "largetext" {
-                            description "sgt.pdr.ic.ama.lan"
-                        }
-                        containerInstance backoffice "" "largetext" {
-                            description "be-sgt.pdr.ic.ama.lan"
-                        }
-                    }
-                    deploymentNode "prd-sgt-db Namespace" "" "" "Kubernetes - ns" {
-                        containerInstance database "" "largetext" {
-                            description "db-postgresql-service.prd-sgt-db.srv.cluster.local"
-                        }
-                    }
+                    <ADD_HERE_PRODUCT_DEPLOYMENT_NODES_FOR_PRD>
                 }
                 tags "Microsoft Azure - Resource Groups"
             }
@@ -147,28 +97,27 @@ workspace "SGT Infrastructure" {
             }
         }
     }
-
     views {
         deployment ss development {
-            title "SGT - Development Environment"
+            title "<PRODUCT NAME> - Development Environment"
             description "Default Kubernetes Cloud DEV environment"
             include *
             autoLayout tb
         }
         deployment ss test {
-            title "SGT - Test Environment"
+            title "<PRODUCT NAME> - Test Environment"
             description "Default Kubernetes Cloud TST environment"
             include *
             autoLayout tb
         }
         deployment ss preproduction {
-            title "SGT - Pre-Production Environment"
+            title "<PRODUCT NAME> - Pre-Production Environment"
             description "Default Kubernetes Cloud PPR environment"
             include *
             autoLayout tb
         }
         deployment ss production {
-            title "SGT - Production Environment"
+            title "<PRODUCT NAME> - Production Environment"
             description "Default Kubernetes Cloud PRD environment"
             include *
             autoLayout tb

@@ -6,7 +6,6 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import pt.ama.model.DocumentType;
-import pt.ama.model.Template;
 
 import java.util.List;
 
@@ -29,8 +28,7 @@ public class TemplateRequest {
     private String manager;
     private String category;
     private List<String> tags;
-    
-    // Metadados do template
+
     private TemplateMetadataRequest metadata;
     
     @Data
@@ -39,18 +37,7 @@ public class TemplateRequest {
     public static class TemplateMetadataRequest {
         private List<String> requiredFields;
         private List<String> optionalFields;
-        private List<ImageReferenceRequest> imageReferences;
         private String sampleData;
         private String documentation;
-    }
-    
-    @Data
-    @NoArgsConstructor
-    @AllArgsConstructor
-    public static class ImageReferenceRequest {
-        private String placeholder;
-        private String description;
-        private String recommendedSize;
-        private boolean required;
     }
 }
