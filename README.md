@@ -6,7 +6,7 @@ Se você quiser aprender mais sobre Quarkus, visite o site: <https://quarkus.io/
 
 ## Pré-requisitos
 
-- Java 17+
+- Java 21+
 - Maven 3.8+
 - Docker e Docker Compose (para executar o MongoDB)
 
@@ -217,7 +217,6 @@ O sistema suporta templates HTML avançados com:
 
 ### Imagens Base64
 ```html
-<img src="{company.logo}" alt="Logo" />
 <!-- Onde company.logo contém: data:image/png;base64,iVBORw0... -->
 ```
 
@@ -255,9 +254,6 @@ O sistema suporta templates HTML avançados com:
 
 # Testes específicos
 ./mvnw test -Dtest=DocumentResourceTest
-./mvnw test -Dtest=ImageResourceTest
-./mvnw test -Dtest=TemplateResourceTest
-./mvnw test -Dtest=SystemIntegrationTest
 
 # Teste Metodo específico
 ./mvnw test -Dtest=DocumentResourceTest#testGenerateSimpleDocument
@@ -272,7 +268,7 @@ A aplicação pode ser empacotada usando:
 ```
 
 Isso produz o arquivo `quarkus-run.jar` no diretório `target/quarkus-app/`.
-Esteja ciente de que não é um _über-jar_ pois as dependências são copiadas para o diretório `target/quarkus-app/lib/`.
+As dependências são copiadas para o diretório `target/quarkus-app/lib/`.
 
 A aplicação agora pode ser executada usando `java -jar target/quarkus-app/quarkus-run.jar`.
 

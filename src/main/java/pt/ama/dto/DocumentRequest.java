@@ -12,7 +12,6 @@ public class DocumentRequest {
 
     @NotNull(message = "Data is required")
     private JsonNode data;
-
     private PdfOptions options;
 
     @Data
@@ -20,7 +19,6 @@ public class DocumentRequest {
         private String filename;
         private String orientation = "portrait";
         private String pageSize = "A4";
-        private Boolean includeMetadata = true;
         private String author;
         private String subject;
         private String keywords;
