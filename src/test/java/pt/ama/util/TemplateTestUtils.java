@@ -1,12 +1,89 @@
 package pt.ama.util;
 
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import pt.ama.dto.DocumentRequest;
+import pt.ama.dto.TemplateRequest;
+import pt.ama.dto.TemplateResponse;
+import pt.ama.model.DocumentType;
+import pt.ama.model.Template;
+
 import java.io.IOException;
+import java.math.BigDecimal;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.time.LocalDateTime;
 import java.util.*;
 
 public class TemplateTestUtils {
-    
+
+    public static DocumentRequest createDocumentRequest(String templateName, String filename) throws Exception {
+        DocumentRequest request = new DocumentRequest();
+        request.setTemplateName(templateName);
+
+        ObjectMapper objectMapper = new ObjectMapper();
+        JsonNode data = objectMapper.readTree("{\"title\": \"Test Document\", \"content\": \"Sample content\"}");
+        request.setData(data);
+
+        if (filename != null) {
+            DocumentRequest.PdfOptions options = new DocumentRequest.PdfOptions();
+            options.setFilename(filename);
+            request.setOptions(options);
+        }
+
+        return request;
+    }
+
+
+    public static Template createTemplate(String name, DocumentType type) {
+        Template template = new Template();
+        template.setName(name);
+        template.setType(type);
+        template.setContent(getContentByType(type));
+        template.setDescription("Test template");
+        template.setAuthor("Test Author");
+        template.setVersion(BigDecimal.valueOf(1.0));
+        template.setActive(true);
+        template.setCreatedAt(LocalDateTime.now());
+        template.setUpdatedAt(LocalDateTime.now());
+        return template;
+    }
+
+    public static TemplateRequest createTemplateRequest(String name, DocumentType type) {
+        TemplateRequest request = new TemplateRequest();
+        request.setName(name);
+        request.setType(type);
+        request.setContent(getContentByType(type));
+        request.setDescription("Test template");
+        request.setAuthor("Test Author");
+        request.setOwner("Test Owner");
+        request.setManager("Test Manager");
+        request.setCategory("Test Category");
+        return request;
+    }
+
+    public static TemplateResponse createTemplateResponse(String name, DocumentType type) {
+        TemplateResponse response = new TemplateResponse();
+        response.setName(name);
+        response.setType(type);
+        response.setContent(getContentByType(type));
+        response.setDescription("Test template");
+        response.setAuthor("Test Author");
+        response.setVersion(BigDecimal.valueOf(1.0));
+        response.setActive(true);
+        response.setCreatedAt(LocalDateTime.now());
+        response.setUpdatedAt(LocalDateTime.now());
+        return response;
+    }
+
+    public static String getContentByType(DocumentType type) {
+        return switch (type) {
+            case PDF -> "<html><body>PDF Test content</body></html>";
+            case EMAIL -> "Subject: Test Email\n\nEmail content: {content}";
+            case SMS -> "SMS content: {message}";
+        };
+    }
+
     public static String loadTemplateFromFile(String filename) {
         try {
             return Files.readString(Paths.get("src/test/resources/templates/" + filename));

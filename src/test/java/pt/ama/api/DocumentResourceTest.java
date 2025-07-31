@@ -1,14 +1,11 @@
 package pt.ama.api;
 
-import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import io.quarkus.test.junit.QuarkusTest;
 import io.quarkus.test.InjectMock;
+import io.quarkus.test.junit.QuarkusTest;
 import jakarta.ws.rs.core.Response;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.DisplayName;
-import org.mockito.Mockito;
+import org.junit.jupiter.api.Test;
 import pt.ama.dto.DocumentRequest;
 import pt.ama.dto.DocumentResponse;
 import pt.ama.service.DocumentService;
@@ -18,6 +15,7 @@ import java.util.Base64;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
+import static pt.ama.util.TemplateTestUtils.createDocumentRequest;
 
 @QuarkusTest
 class DocumentResourceTest {
@@ -26,13 +24,11 @@ class DocumentResourceTest {
     DocumentService documentService;
 
     private DocumentResource documentResource;
-    private ObjectMapper objectMapper;
 
     @BeforeEach
     void setUp() {
         documentResource = new DocumentResource();
         documentResource.documentService = documentService;
-        objectMapper = new ObjectMapper();
     }
 
     @Test
@@ -132,7 +128,7 @@ class DocumentResourceTest {
         assertEquals("test-template.pdf", documentResponse.getFilename());
         assertEquals("application/pdf", documentResponse.getContentType());
         assertEquals(expectedBase64, documentResponse.getBase64Content());
-        assertEquals((long) expectedDocument.length, documentResponse.getSize());
+        assertEquals(expectedDocument.length, documentResponse.getSize());
         assertEquals(templateName, documentResponse.getTemplateName());
         assertNotNull(documentResponse.getGeneratedAt());
 
@@ -320,22 +316,5 @@ class DocumentResourceTest {
         assertFalse(documentResponse.getBase64Content().isEmpty());
 
         verify(documentService, times(1)).generateDocument(request);
-    }
-
-    private DocumentRequest createDocumentRequest(String templateName, String filename) throws Exception {
-        DocumentRequest request = new DocumentRequest();
-        request.setTemplateName(templateName);
-
-
-        JsonNode data = objectMapper.readTree("{\"title\": \"Test Document\", \"content\": \"Sample content\"}");
-        request.setData(data);
-        
-        if (filename != null) {
-            DocumentRequest.PdfOptions options = new DocumentRequest.PdfOptions();
-            options.setFilename(filename);
-            request.setOptions(options);
-        }
-        
-        return request;
     }
 }

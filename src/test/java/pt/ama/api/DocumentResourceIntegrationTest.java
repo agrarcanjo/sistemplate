@@ -1,12 +1,10 @@
 package pt.ama.api;
 
-import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import io.quarkus.test.junit.QuarkusTest;
 import io.quarkus.test.InjectMock;
+import io.quarkus.test.junit.QuarkusTest;
 import io.restassured.http.ContentType;
-import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
 import pt.ama.dto.DocumentRequest;
 import pt.ama.service.DocumentService;
 
@@ -14,6 +12,7 @@ import static io.restassured.RestAssured.given;
 import static org.hamcrest.Matchers.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
+import static pt.ama.util.TemplateTestUtils.createDocumentRequest;
 
 @QuarkusTest
 class DocumentResourceIntegrationTest {
@@ -30,7 +29,6 @@ class DocumentResourceIntegrationTest {
                 .thenReturn(mockDocument);
 
         DocumentRequest request = createDocumentRequest("test-template", null);
-
 
         given()
             .contentType(ContentType.JSON)
@@ -78,7 +76,6 @@ class DocumentResourceIntegrationTest {
         DocumentRequest invalidRequest = new DocumentRequest();
         invalidRequest.setTemplateName("");
 
-
         given()
             .contentType(ContentType.JSON)
             .body(invalidRequest)
@@ -86,22 +83,5 @@ class DocumentResourceIntegrationTest {
             .post("/documents/generate")
         .then()
             .statusCode(400);
-    }
-
-    private DocumentRequest createDocumentRequest(String templateName, String filename) throws Exception {
-        DocumentRequest request = new DocumentRequest();
-        request.setTemplateName(templateName);
-        
-        ObjectMapper objectMapper = new ObjectMapper();
-        JsonNode data = objectMapper.readTree("{\"title\": \"Test Document\", \"content\": \"Sample content\"}");
-        request.setData(data);
-        
-        if (filename != null) {
-            DocumentRequest.PdfOptions options = new DocumentRequest.PdfOptions();
-            options.setFilename(filename);
-            request.setOptions(options);
-        }
-        
-        return request;
     }
 }
