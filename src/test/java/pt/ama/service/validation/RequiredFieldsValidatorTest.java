@@ -48,8 +48,8 @@ class RequiredFieldsValidatorTest {
         Map<String, Object> dataMap = new HashMap<>();
         dataMap.put("name", "João Silva");
         RequiredFieldsValidationException exception = assertThrows(
-            RequiredFieldsValidationException.class,
-            () -> validator.validateRequiredFields(template, dataMap)
+                RequiredFieldsValidationException.class,
+                () -> validator.validateRequiredFields(template, dataMap)
         );
 
         assertEquals("test-template", exception.getTemplateName());
@@ -61,7 +61,6 @@ class RequiredFieldsValidatorTest {
 
     @Test
     void shouldPassValidationWhenNoRequiredFieldsAreDefined() {
-        // Given
         Template.TemplateMetadata metadata = new Template.TemplateMetadata();
         metadata.setRequiredFields(null);
         template.setMetadata(metadata);
@@ -69,19 +68,16 @@ class RequiredFieldsValidatorTest {
         Map<String, Object> dataMap = new HashMap<>();
         dataMap.put("any", "value");
 
-        // When & Then
         assertDoesNotThrow(() -> validator.validateRequiredFields(template, dataMap));
     }
 
     @Test
     void shouldPassValidationWhenMetadataIsNull() {
-        // Given
         template.setMetadata(null);
 
         Map<String, Object> dataMap = new HashMap<>();
         dataMap.put("any", "value");
 
-        // When & Then
         assertDoesNotThrow(() -> validator.validateRequiredFields(template, dataMap));
     }
 
@@ -119,8 +115,8 @@ class RequiredFieldsValidatorTest {
         dataMap.put("user", user);
 
         RequiredFieldsValidationException exception = assertThrows(
-            RequiredFieldsValidationException.class,
-            () -> validator.validateRequiredFields(template, dataMap)
+                RequiredFieldsValidationException.class,
+                () -> validator.validateRequiredFields(template, dataMap)
         );
 
         assertTrue(exception.getMissingFields().contains("user.address.city"));
@@ -137,8 +133,8 @@ class RequiredFieldsValidatorTest {
         dataMap.put("email", null);
 
         RequiredFieldsValidationException exception = assertThrows(
-            RequiredFieldsValidationException.class,
-            () -> validator.validateRequiredFields(template, dataMap)
+                RequiredFieldsValidationException.class,
+                () -> validator.validateRequiredFields(template, dataMap)
         );
 
         assertTrue(exception.getMissingFields().contains("email"));

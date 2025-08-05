@@ -36,6 +36,7 @@ public class Template {
     private String category;
     private List<String> tags;
     private TemplateMetadata metadata;
+    private Estado estado;
 
     @Data
     public static class TemplateMetadata {
@@ -45,5 +46,29 @@ public class Template {
         private String sampleData; // JSON de exemplo para teste
         private String documentation; // Documentação do template
     }
+
+    @Data
+    public static class Estado {
+
+    }
+
+
+//            Rascunho
+//
+//    Submetido
+//
+//    A Aguardar Validação
+//
+//    Em Validação
+//
+//    Aprovado
+//
+//            Rejeitado
+//
+//    Em Espera de Informação
+//
+//    Ativo
+//
+//            Inativo
 
 }
