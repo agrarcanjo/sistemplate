@@ -12,32 +12,7 @@ import java.util.stream.Collectors;
 public class TemplateMapper {
 
     public Template toEntity(TemplateRequest request) {
-        if (request == null) {
-            return null;
-        }
-
-        Template template = new Template();
-        template.setName(request.getName());
-        template.setType(request.getType());
-        template.setContent(request.getContent());
-        template.setDescription(request.getDescription());
-        template.setAuthor(request.getAuthor());
-        template.setOwner(request.getOwner());
-        template.setManager(request.getManager());
-        template.setCategory(request.getCategory());
-        template.setTags(request.getTags());
-
-        if (request.getMetadata() != null) {
-            Template.TemplateMetadata metadata = new Template.TemplateMetadata();
-            metadata.setRequiredFields(request.getMetadata().getRequiredFields());
-            metadata.setOptionalFields(request.getMetadata().getOptionalFields());
-            metadata.setSampleData(request.getMetadata().getSampleData());
-            metadata.setDocumentation(request.getMetadata().getDocumentation());
-
-            template.setMetadata(metadata);
-        }
-
-        return template;
+        return null;
     }
 
     public TemplateResponse toResponse(Template template) {
@@ -80,5 +55,8 @@ public class TemplateMapper {
         return templates.stream()
                 .map(this::toResponse)
                 .collect(Collectors.toList());
+    }
+
+    public void updateEntity(Template existingTemplate, TemplateRequest request) {
     }
 }

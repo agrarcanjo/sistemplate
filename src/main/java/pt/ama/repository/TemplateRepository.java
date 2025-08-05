@@ -31,7 +31,7 @@ public class TemplateRepository implements PanacheMongoRepositoryBase<Template, 
         delete("name = ?1", name);
     }
 
-    public boolean exists(String name) {
+    public boolean existsByName(String name) {
         return count("name = ?1 and active = true", name) > 0;
     }
 

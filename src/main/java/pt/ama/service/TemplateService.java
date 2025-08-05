@@ -1,13 +1,15 @@
 package pt.ama.service;
 
-import com.fasterxml.jackson.databind.JsonNode;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
+import jakarta.transaction.Transactional;
+import pt.ama.dto.TemplateRequest;
 import pt.ama.exception.TemplateNotFoundException;
-import pt.ama.model.Template;
-import pt.ama.dto.DocumentRequest;
-import pt.ama.repository.TemplateRepository;
+import pt.ama.mapper.TemplateMapper;
 import pt.ama.model.DocumentType;
+import pt.ama.model.Template;
+import pt.ama.repository.TemplateRepository;
+import pt.ama.service.validation.TemplateValidator;
 import org.jboss.logging.Logger;
 
 import java.time.LocalDateTime;
@@ -15,89 +17,106 @@ import java.util.List;
 
 @ApplicationScoped
 public class TemplateService {
-    
+
     private static final Logger LOG = Logger.getLogger(TemplateService.class);
-    
+
     @Inject
     TemplateRepository templateRepository;
-    
+
     @Inject
-    PdfGenerator pdfGenerator;
+    TemplateMapper templateMapper;
+
+    @Inject
+    TemplateValidator templateValidator;
 
     public List<Template> findAll() {
+        LOG.debug("Buscando todos os templates");
         return templateRepository.listAll();
     }
 
     public Template findByName(String name) {
-        LOG.infof("TemplateService: Buscando template com nome: '%s'", name);
-            Template template = templateRepository.findByName(name);
+        LOG.debugf("Buscando template com nome: %s", name);
+        return templateRepository.findByName(name);
+    }
+
+    public Template findByNameOrThrow(String name) {
+        Template template = findByName(name);
         if (template == null) {
-            LOG.warnf("TemplateService: Template não encontrado: '%s'", name);
-        } else {
-            LOG.infof("TemplateService: Template encontrado: '%s', active=%s", template.getName(), template.isActive());
+            LOG.warnf("Template não encontrado: %s", name);
+            throw new TemplateNotFoundException(name);
         }
+        LOG.debugf("Template encontrado: %s", template.getName());
         return template;
     }
 
     public List<Template> findByType(DocumentType type) {
+        LOG.debugf("Buscando templates por tipo: %s", type);
         return templateRepository.findByType(type);
     }
 
     public List<Template> findByNameContaining(String namePattern) {
+        LOG.debugf("Buscando templates com padrão: %s", namePattern);
         return templateRepository.findByNameContaining(namePattern);
     }
 
-    public void save(Template template) {
-        LOG.infof("TemplateService: Salvando template: '%s'", template.getName());
-        
-        if (!template.isActive() && template.getName() != null) {
-            template.setActive(true);
-            LOG.infof("TemplateService: Definindo template como ativo: '%s'", template.getName());
-        }
-        
+    public List<Template> findByTemplateVersion(String templateName) {
+        LOG.debugf("Buscando versões do template: %s", templateName);
+        return templateRepository.findByTemplateVersion(templateName);
+    }
+
+    @Transactional
+    public Template createTemplate(TemplateRequest request) {
+        LOG.infof("Criando novo template: %s", request.getName());
+
+        templateValidator.validateForCreation(request);
+
+        Template template = templateMapper.toEntity(request);
         template.setCreatedAt(LocalDateTime.now());
         template.setUpdatedAt(LocalDateTime.now());
+        template.setActive(true);
+
         templateRepository.persist(template);
-        
-        LOG.infof("TemplateService: Template salvo com sucesso: '%s', active=%s", 
-                 template.getName(), template.isActive());
+
+        LOG.infof("Template criado com sucesso: %s", template.getName());
+        return template;
     }
 
-    public void update(Template template) {
-        LOG.infof("TemplateService: Atualizando template: '%s'", template.getName());
-        template.setUpdatedAt(LocalDateTime.now());
-        templateRepository.update(template);
+    @Transactional
+    public Template updateTemplate(String name, TemplateRequest request) {
+        LOG.infof("Atualizando template: %s", name);
+
+        Template existingTemplate = findByNameOrThrow(name);
+        templateValidator.validateForUpdate(name, request);
+
+        templateMapper.updateEntity(existingTemplate, request);
+        existingTemplate.setUpdatedAt(LocalDateTime.now());
+
+        templateRepository.persist(existingTemplate);
+
+        LOG.infof("Template atualizado com sucesso: %s", existingTemplate.getName());
+        return existingTemplate;
     }
 
-    public void delete(String name) {
-        LOG.infof("TemplateService: Deletando template: '%s'", name);
-        templateRepository.deleteByName(name);
+    @Transactional
+    public void deleteTemplate(String name) {
+        LOG.infof("Removendo template: %s", name);
+
+        Template template = findByNameOrThrow(name);
+
+        validateTemplateCanBeDeleted(template);
+
+        templateRepository.delete(template);
+
+        LOG.infof("Template removido com sucesso: %s", name);
     }
 
     public boolean exists(String name) {
-        boolean exists = templateRepository.exists(name);
-        LOG.infof("TemplateService: Template '%s' existe: %s", name, exists);
-        return exists;
+        return templateRepository.existsByName(name);
     }
 
-    public List<Template> findByTemplateVersion(String name) {
-        return templateRepository.findByTemplateVersion(name);
-    }
-
-    public byte[] generatePdf(String templateName, JsonNode data, DocumentRequest.PdfOptions options) {
-        LOG.infof("TemplateService: Gerando PDF para template: '%s'", templateName);
-        Template template = findByName(templateName);
-        if (template == null) {
-            throw new TemplateNotFoundException(templateName);
+    private void validateTemplateCanBeDeleted(Template template) {
+        if (!template.isActive()) {
+            LOG.warnf("Tentativa de remover template já inativo: %s", template.getName());
         }
-        return pdfGenerator.generatePdf(template.getContent(), data, options);
-    }
-    
-    public List<Template> findByCategory(String category) {
-        return templateRepository.find("category = ?1 and active = true", category).list();
-    }
-    
-    public List<Template> findByOwner(String owner) {
-        return templateRepository.find("owner = ?1 and active = true", owner).list();
     }
 }

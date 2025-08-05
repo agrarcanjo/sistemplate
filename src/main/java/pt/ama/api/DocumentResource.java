@@ -5,23 +5,23 @@ import jakarta.validation.Valid;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
+import org.eclipse.microprofile.openapi.annotations.Operation;
+import org.eclipse.microprofile.openapi.annotations.responses.APIResponse;
+import org.eclipse.microprofile.openapi.annotations.responses.APIResponses;
+import org.eclipse.microprofile.openapi.annotations.tags.Tag;
 import pt.ama.dto.DocumentRequest;
 import pt.ama.dto.DocumentResponse;
 import pt.ama.resource.JsonApiResource;
 import pt.ama.service.DocumentService;
 import org.jboss.logging.Logger;
 
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
-import java.util.Base64;
-
-@Path("/documents")
+@Path("/api/documents")
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)
+@Tag(name = "Document", description = "Operações de geração de documentos")
 public class DocumentResource extends JsonApiResource {
 
     private static final Logger LOG = Logger.getLogger(DocumentResource.class);
-    private static final String CONTENT_TYPE = "application/pdf";
 
     @Inject
     DocumentService documentService;
@@ -29,60 +29,41 @@ public class DocumentResource extends JsonApiResource {
     @POST
     @Path("/generate")
     @Produces(MediaType.APPLICATION_OCTET_STREAM)
+    @Operation(summary = "Gera um documento PDF para download")
+    @APIResponses({
+        @APIResponse(responseCode = "200", description = "Documento gerado com sucesso"),
+        @APIResponse(responseCode = "400", description = "Dados inválidos"),
+        @APIResponse(responseCode = "404", description = "Template não encontrado")
+    })
     public Response generateDocument(@Valid DocumentRequest request) {
-        LOG.infof("DocumentResource: Recebida solicitação para gerar documento - template: '%s'",
-                request.getTemplateName());
-
+        LOG.infof("Iniciando geração de documento para template: %s", request.getTemplateName());
+        
         byte[] document = documentService.generateDocument(request);
-        LOG.infof("DocumentResource: Documento gerado com sucesso - tamanho: %d bytes", document.length);
-
-        String filename = buildFilename(request);
-        LOG.infof("DocumentResource: Retornando documento com filename: '%s'", filename);
+        String filename = documentService.buildFilename(request);
+        
+        LOG.infof("Documento gerado com sucesso - tamanho: %d bytes", document.length);
 
         return Response.ok(document)
                 .header("Content-Disposition", "attachment; filename=\"" + filename + "\"")
-                .header("Content-Type", CONTENT_TYPE)
+                .header("Content-Type", "application/pdf")
                 .build();
     }
 
     @POST
-    @Path("/generate-code")
-    @Produces(MediaType.APPLICATION_JSON)
-    public Response generateCodeDocument(@Valid DocumentRequest request) {
-        LOG.infof("DocumentResource: Recebida solicitação para gerar codigo em base64 do documento - template: '%s'",
-                request.getTemplateName());
+    @Path("/generate-base64")
+    @Operation(summary = "Gera um documento PDF codificado em Base64")
+    @APIResponses({
+        @APIResponse(responseCode = "200", description = "Documento gerado com sucesso"),
+        @APIResponse(responseCode = "400", description = "Dados inválidos"),
+        @APIResponse(responseCode = "404", description = "Template não encontrado")
+    })
+    public Response generateBase64Document(@Valid DocumentRequest request) {
+        LOG.infof("Iniciando geração de documento Base64 para template: %s", request.getTemplateName());
+        
+        DocumentResponse response = documentService.generateBase64Document(request);
+        
+        LOG.infof("Documento Base64 gerado com sucesso - tamanho: %d bytes", response.getSize());
 
-        byte[] document = documentService.generateDocument(request);
-        LOG.infof("DocumentResource: Documento gerado com sucesso - tamanho: %d bytes", document.length);
-
-        String filename = buildFilename(request);
-        String base64Content = Base64.getEncoder().encodeToString(document);
-
-        DocumentResponse response = new DocumentResponse(
-                filename,
-                CONTENT_TYPE,
-                base64Content,
-                (long) document.length,
-                request.getTemplateName(),
-                LocalDateTime.now().format(DateTimeFormatter.ISO_LOCAL_DATE_TIME)
-        );
-
-        LOG.infof("DocumentResource: Retornando documento codificado em base64 - filename: '%s', tamanho: %d bytes",
-                filename, document.length);
-
-        return Response.ok(response).build();
-    }
-
-    private String buildFilename(DocumentRequest request) {
-        String filename = request.getTemplateName();
-        if (request.getOptions() != null && request.getOptions().getFilename() != null) {
-            filename = request.getOptions().getFilename();
-        }
-
-        if (!filename.toLowerCase().endsWith(".pdf")) {
-            filename += ".pdf";
-        }
-
-        return filename;
+        return Response.ok(ok(response)).build();
     }
 }

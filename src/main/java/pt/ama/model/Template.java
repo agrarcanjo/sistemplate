@@ -4,6 +4,7 @@ import io.quarkus.mongodb.panache.common.MongoEntity;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;
+import lombok.Getter;
 import org.bson.codecs.pojo.annotations.BsonId;
 import org.bson.types.ObjectId;
 
@@ -36,7 +37,7 @@ public class Template {
     private String category;
     private List<String> tags;
     private TemplateMetadata metadata;
-    private Estado estado;
+    private DocumentStatus status;
 
     @Data
     public static class TemplateMetadata {
@@ -47,28 +48,22 @@ public class Template {
         private String documentation; // Documentação do template
     }
 
-    @Data
-    public static class Estado {
+    @Getter
+    public enum DocumentStatus {
+        RASCUNHO ("Rascunho"),
+        SUBMETIDO("Submetido"),
+        A_AGUARDAR_VALIDACAO("A Aguardar Validação"),
+        EM_VALIDACAO("Em Validação"),
+        APROVADO("Aprovado"),
+        REJEITADO("Rejeitado"),
+        EM_ESPERA_INFORMACAO("Em Espera de Informação"),
+        ATIVO("Ativo"),
+        INATIVO("Inativo");
+
+        private final String description;
+
+        DocumentStatus(String description) { this.description = description; }
 
     }
-
-
-//            Rascunho
-//
-//    Submetido
-//
-//    A Aguardar Validação
-//
-//    Em Validação
-//
-//    Aprovado
-//
-//            Rejeitado
-//
-//    Em Espera de Informação
-//
-//    Ativo
-//
-//            Inativo
 
 }
