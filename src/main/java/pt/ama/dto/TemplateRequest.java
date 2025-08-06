@@ -5,6 +5,7 @@ import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import pt.ama.model.DocumentStatus;
 import pt.ama.model.DocumentType;
 
 import java.util.List;
@@ -28,6 +29,7 @@ public class TemplateRequest {
     private String manager;
     private String category;
     private List<String> tags;
+    private DocumentStatus status;
 
     private TemplateMetadataRequest metadata;
     

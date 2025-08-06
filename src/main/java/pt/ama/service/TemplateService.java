@@ -2,10 +2,10 @@ package pt.ama.service;
 
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
-import jakarta.transaction.Transactional;
 import pt.ama.dto.TemplateRequest;
 import pt.ama.exception.TemplateNotFoundException;
 import pt.ama.mapper.TemplateMapper;
+import pt.ama.model.DocumentStatus;
 import pt.ama.model.DocumentType;
 import pt.ama.model.Template;
 import pt.ama.repository.TemplateRepository;
@@ -64,7 +64,6 @@ public class TemplateService {
         return templateRepository.findByTemplateVersion(templateName);
     }
 
-    @Transactional
     public Template createTemplate(TemplateRequest request) {
         LOG.infof("Criando novo template: %s", request.getName());
 
@@ -74,6 +73,7 @@ public class TemplateService {
         template.setCreatedAt(LocalDateTime.now());
         template.setUpdatedAt(LocalDateTime.now());
         template.setActive(true);
+        template.setStatus(DocumentStatus.RASCUNHO);
 
         templateRepository.persist(template);
 
@@ -81,7 +81,6 @@ public class TemplateService {
         return template;
     }
 
-    @Transactional
     public Template updateTemplate(String name, TemplateRequest request) {
         LOG.infof("Atualizando template: %s", name);
 
@@ -97,7 +96,6 @@ public class TemplateService {
         return existingTemplate;
     }
 
-    @Transactional
     public void deleteTemplate(String name) {
         LOG.infof("Removendo template: %s", name);
 
