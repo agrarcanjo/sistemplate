@@ -251,18 +251,18 @@ class DocumentResourceTest {
 
     @Test
     @DisplayName("Should build filename correctly when template name is used")
-    void shouldBuildFilenameFromTemplateName() throws Exception {
+    void shouldBuildFilenameFromTemplateName() {
 
         String templateName = "invoice-template";
-        DocumentRequest request = createDocumentRequest(templateName, null);
+        DocumentRequest request = new DocumentRequest();
+        request.setTemplateName(templateName);
+
         byte[] document = "content".getBytes();
 
         when(documentService.generateDocument(any(DocumentRequest.class)))
                 .thenReturn(document);
 
-
         Response response = documentResource.generateDocument(request);
-
 
         assertEquals("attachment; filename=\"invoice-template.pdf\"",
                 response.getHeaderString("Content-Disposition"));
