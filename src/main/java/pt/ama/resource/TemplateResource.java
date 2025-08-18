@@ -1,4 +1,4 @@
-package pt.ama.api;
+package pt.ama.resource;
 
 import jakarta.inject.Inject;
 import jakarta.validation.Valid;
@@ -14,7 +14,6 @@ import pt.ama.dto.TemplateResponse;
 import pt.ama.mapper.TemplateMapper;
 import pt.ama.model.DocumentType;
 import pt.ama.model.Template;
-import pt.ama.resource.JsonApiResource;
 import pt.ama.service.TemplateService;
 
 import java.util.List;

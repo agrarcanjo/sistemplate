@@ -2,21 +2,24 @@ package pt.ama.service;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import io.quarkus.qute.Engine;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
+import org.jboss.logging.Logger;
+import pt.ama.dto.AsyncDocumentResponse;
 import pt.ama.dto.DocumentRequest;
 import pt.ama.dto.DocumentResponse;
 import pt.ama.exception.*;
+import pt.ama.mapper.DocumentRequestMapper;
 import pt.ama.model.DocumentType;
 import pt.ama.model.Template;
-import pt.ama.service.generator.DocumentGeneratorFactory;
 import pt.ama.service.generator.DocumentGenerator;
+import pt.ama.service.generator.DocumentGeneratorFactory;
+import pt.ama.service.kafka.DocumentKafkaProducer;
 import pt.ama.service.validation.DocumentValidator;
 import pt.ama.service.validation.RequiredFieldsValidator;
-import io.quarkus.qute.Engine;
-import org.jboss.logging.Logger;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -40,12 +43,52 @@ public class DocumentService {
 
     @Inject
     ObjectMapper objectMapper;
-    
+
+    @Inject
+    DocumentRequestMapper documentRequestMapper;
+
     @Inject
     RequiredFieldsValidator requiredFieldsValidator;
-    
+
     @Inject
     DocumentValidator documentValidator;
+
+    @Inject
+    DocumentKafkaProducer kafkaProducer;
+
+    /**
+     * Processa requisição de documento - síncrono ou assíncrono baseado no flag
+     */
+    public Object processDocumentRequest(@Valid DocumentRequest request) {
+        if (request.isAsync()) {
+            return generateDocumentAsync(request);
+        } else {
+            return generateDocument(request);
+        }
+    }
+
+    /**
+     * Gera documento de forma assíncrona via Kafka
+     */
+    public AsyncDocumentResponse generateDocumentAsync(@Valid DocumentRequest request) {
+        LOG.infof("Iniciando geração assíncrona de documento para template: %s", request.getTemplateName());
+
+        try {
+            // Validação básica da requisição
+            documentValidator.validateDocumentRequest(request);
+
+            // Publicar no Kafka
+            String eventId = kafkaProducer.publishDocumentGenerationRequest(documentRequestMapper.toDocumentGenerationMessage(request));
+
+            LOG.infof("Documento enviado para processamento assíncrono. Event ID: %s", eventId);
+
+            return new AsyncDocumentResponse(eventId, "ACCEPTED", "Document generation request accepted");
+
+        } catch (Exception e) {
+            LOG.errorf("Erro ao processar requisição assíncrona: %s", e.getMessage());
+            throw new DocumentGenerationException(request.getTemplateName(), "Failed to process async document request", e);
+        }
+    }
 
     /**
      * Gera um documento baseado no template e dados fornecidos
@@ -75,7 +118,7 @@ public class DocumentService {
             throw e;
         } catch (Exception e) {
             LOG.errorf(e, "Erro inesperado ao gerar documento para template: %s", request.getTemplateName());
-            throw new DocumentGenerationException(request.getTemplateName(), "UNKNOWN", e.getMessage(), e);
+            throw new DocumentGenerationException(request.getTemplateName(), e.getMessage(), e);
         }
     }
 
@@ -171,12 +214,7 @@ public class DocumentService {
             
         } catch (Exception e) {
             LOG.errorf(e, "Erro ao gerar documento do tipo %s", template.getType());
-            throw new DocumentGenerationException(
-                template.getName(), 
-                template.getType().toString(), 
-                e.getMessage(), 
-                e
-            );
+            throw new DocumentGenerationException(template.getName(), e.getMessage(), e);
         }
     }
 
@@ -214,7 +252,7 @@ public class DocumentService {
     /**
      * Obtém o content type baseado no template
      */
-    private String getContentTypeByTemplate(String templateName) {
+    public String getContentTypeByTemplate(String templateName) {
         try {
             Template template = templateService.findByNameOrThrow(templateName);
             return getContentTypeByDocumentType(template.getType());

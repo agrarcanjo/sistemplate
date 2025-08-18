@@ -1,4 +1,4 @@
-package pt.ama.api;
+package pt.ama.resource;
 
 import io.quarkus.test.InjectMock;
 import io.quarkus.test.junit.QuarkusTest;

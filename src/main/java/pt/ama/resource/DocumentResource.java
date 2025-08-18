@@ -1,4 +1,4 @@
-package pt.ama.api;
+package pt.ama.resource;
 
 import jakarta.inject.Inject;
 import jakarta.validation.Valid;
@@ -9,9 +9,9 @@ import org.eclipse.microprofile.openapi.annotations.Operation;
 import org.eclipse.microprofile.openapi.annotations.responses.APIResponse;
 import org.eclipse.microprofile.openapi.annotations.responses.APIResponses;
 import org.eclipse.microprofile.openapi.annotations.tags.Tag;
+import pt.ama.dto.AsyncDocumentResponse;
 import pt.ama.dto.DocumentRequest;
 import pt.ama.dto.DocumentResponse;
-import pt.ama.resource.JsonApiResource;
 import pt.ama.service.DocumentService;
 import org.jboss.logging.Logger;
 
@@ -65,5 +65,24 @@ public class DocumentResource extends JsonApiResource {
         LOG.infof("Documento Base64 gerado com sucesso - tamanho: %d bytes", response.getSize());
 
         return Response.ok(ok(response)).build();
+    }
+
+    @POST
+    @Path("/generate/async")
+    public Response generateDocumentAsync(@Valid DocumentRequest request) {
+        try {
+            LOG.infof("Iniciando geração de documento Async para template: %s", request.getTemplateName());
+            request.setAsync(true);
+            AsyncDocumentResponse response = documentService.generateDocumentAsync(request);
+            return Response.status(Response.Status.ACCEPTED)
+                    .entity(response)
+                    .build();
+
+        } catch (Exception e) {
+            LOG.error("Error generating document asynchronously", e);
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR)
+                    .entity("Error generating document: " + e.getMessage())
+                    .build();
+        }
     }
 }

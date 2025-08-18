@@ -9,17 +9,14 @@ import lombok.Getter;
 public class DocumentGenerationException extends RuntimeException {
     
     private final String templateName;
-    private final String documentType;
     
-    public DocumentGenerationException(String templateName, String documentType, String message, Throwable cause) {
-        super(String.format("Erro ao gerar documento %s para template '%s': %s", documentType, templateName, message), cause);
+    public DocumentGenerationException(String templateName, String message, Throwable cause) {
+        super(String.format("Erro ao gerar documento para template %s: %s", templateName, message), cause);
         this.templateName = templateName;
-        this.documentType = documentType;
     }
     
-    public DocumentGenerationException(String templateName, String documentType, String message) {
-        super(String.format("Erro ao gerar documento %s para template '%s': %s", documentType, templateName, message));
+    public DocumentGenerationException(String templateName, String message) {
+        super(String.format("Erro ao gerar documento para template '%s': %s", templateName, message));
         this.templateName = templateName;
-        this.documentType = documentType;
     }
 }

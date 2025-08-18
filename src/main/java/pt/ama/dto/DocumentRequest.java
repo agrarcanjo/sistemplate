@@ -12,6 +12,10 @@ public class DocumentRequest {
 
     @NotNull(message = "Data is required")
     private JsonNode data;
+    
+    private String receiver;
+    private String callbackUrl;
+    private boolean async = false;
     private PdfOptions options;
 
     @Data
