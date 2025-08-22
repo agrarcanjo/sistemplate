@@ -295,3 +295,30 @@ Se você quiser aprender mais sobre a construção de executáveis nativos, cons
 - RESTEasy Reactive ([guide](https://quarkus.io/guides/resteasy-reactive)): Uma implementação Jakarta REST usando processamento reativo
 - SmallRye OpenAPI ([guide](https://quarkus.io/guides/openapi-swaggerui)): Documente suas APIs REST com OpenAPI - vem com Swagger UI
 - MongoDB with Panache ([guide](https://quarkus.io/guides/mongodb-panache)): Simplifique seu código de persistência para MongoDB via Active Record ou Repository pattern
+
+
+## Processamento Assincrono
+```mermaid
+sequenceDiagram
+    participant Client
+    participant API
+    participant DocumentService
+    participant KafkaProducer
+    participant Kafka
+    participant KafkaConsumer
+    participant CallbackService
+    
+    Client->>API: POST /documents/generate (async=true)
+    API->>DocumentService: processDocumentRequest()
+    DocumentService->>KafkaProducer: publishDocumentGenerationRequest()
+    KafkaProducer->>Kafka: send(eventId, message)
+    DocumentService->>API: AsyncDocumentResponse(eventId, "ACCEPTED")
+    API->>Client: 202 Accepted + eventId
+    
+    Note over Kafka,KafkaConsumer: Processamento Assíncrono
+    Kafka->>KafkaConsumer: poll() retorna records
+    KafkaConsumer->>DocumentService: generateDocument()
+    DocumentService->>KafkaConsumer: byte[] document
+    KafkaConsumer->>CallbackService: sendDocumentCallback()
+    CallbackService->>Client: POST callback com documento
+```
